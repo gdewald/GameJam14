@@ -6,10 +6,11 @@ public class AutozoomScript : MonoBehaviour {
 	public List<GameObject> objects;
 	public Camera camera;
 	
+	public float minSize = 10.0f;
+
 	Vector3 center;
 	float size;
-	
-	public const float min_size = 5.0f;
+
 	
 	// Use this for initialization
 	void Start () {
@@ -17,15 +18,19 @@ public class AutozoomScript : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 	
 		calcBoundingBox();
-		camera.transform.position = Vector3.Lerp(camera.transform.position, center, Time.deltaTime);	
-		
-		if(objects.Count > 1 && size > min_size) {
+	
+		//Zoom camera
+		if(objects.Count > 1 && size > minSize) {
 			camera.orthographicSize = Mathf.Lerp(camera.orthographicSize, size, Time.deltaTime);	
 		}
-		else camera.orthographicSize = Mathf.Lerp(camera.orthographicSize, min_size, Time.deltaTime);
+		else camera.orthographicSize = Mathf.Lerp(camera.orthographicSize, minSize, Time.deltaTime);
+		
+		//Move camera(only if distance is big enough
+		if(Vector3.Distance(camera.transform.position, center) > camera.orthographicSize * .1)
+			camera.transform.position = Vector3.Lerp(camera.transform.position, center, Time.deltaTime * 3);	
 	}
 	
 	// Returns the 'center' between the followed objects
@@ -44,15 +49,14 @@ public class AutozoomScript : MonoBehaviour {
 					lr.y = o.transform.position.y;
 		}
 		
-		Debug.Log("ul=("+ul.x+","+ul.y+") lr=("+lr.x+","+lr.y+")"	); 
+		//Debug.Log("ul=("+ul.x+","+ul.y+") lr=("+lr.x+","+lr.y+")"	); 
 		
 		center = new Vector3((ul.x + lr.x) /2, (ul.y + lr.y) / 2, camera.transform.position.z);
 		
-		
-		
+		//calculate required zoom to see all the objects
 		size = Mathf.Max(Mathf.Abs(ul.y - lr.y), Mathf.Abs(lr.x - ul.x))/2;
-		size *= 1.1f;
-			
+		//some padding
+		size *= 1.1f;	
 	}
 
 }

@@ -7,6 +7,10 @@ public class Controller : MonoBehaviour {
 	public float shotDelay;
 
 	private float shotTimer;
+	
+	public string movementAxis = "LeftStick";
+	public string aimAxis = "RightStick";
+	
 
 	void Start () {
 		shotTimer = 0.0f;
@@ -15,8 +19,8 @@ public class Controller : MonoBehaviour {
 	}
 
 	void Update () {
-		float leftH = Input.GetAxis ("LeftStickX");
-		float leftV = Input.GetAxis ("LeftStickY");
+		float leftH = Input.GetAxis (movementAxis + "X");
+		float leftV = Input.GetAxis (movementAxis + "Y");
 
 		Vector2 leftStick = new Vector2 (leftH, leftV);
 		rigidbody2D.velocity = leftStick * maxSpeed;
@@ -39,8 +43,8 @@ public class Controller : MonoBehaviour {
 
 		// Try to shoot
 		
-		float rightH = Input.GetAxis ("RightStickX");
-		float rightV = Input.GetAxis ("RightStickY");
+		float rightH = Input.GetAxis (aimAxis + "X");
+		float rightV = Input.GetAxis (aimAxis + "Y");
 		Vector2 rightStick = new Vector2 (rightH, rightV);
 		if(rightStick.magnitude >= 0.25f)
 			Shoot (rightStick);

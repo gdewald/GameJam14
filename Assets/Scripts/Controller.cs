@@ -52,10 +52,9 @@ public class Controller : MonoBehaviour {
 
 			
 
-		if(rigidbody2D.velocity.magnitude > .1f)
+		if(rigidbody2D.velocity.magnitude > .5f) {
 			transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, 0,  -Mathf.Atan2(leftH, leftV) * Mathf.Rad2Deg + 90), Time.deltaTime * rigidbody2D.velocity.magnitude)	;
-
-
+		}
 
 		// toggle split
 		if(Input.GetButtonDown("ToggleSplit")){

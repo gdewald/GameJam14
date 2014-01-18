@@ -2,10 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Targets {
-	public static IList<GameObject> objects = new List<GameObject>();
-}
-
 public class Follow : MonoBehaviour {
 	public float maxSpeed;
 
@@ -14,16 +10,17 @@ public class Follow : MonoBehaviour {
 	}
 
 	void Update () {
-		if (Targets.objects.Count == 0){
+		GameObject[] targets = GameObject.FindGameObjectsWithTag("Target");
+		if (targets.Length == 0){
 			return;
 		}
 
-		GameObject closestObj = Targets.objects[0];
-		float closestDist = (Targets.objects [0].transform.position - transform.position).magnitude;
+		GameObject closestObj = targets[0];
+		float closestDist = (targets[0].transform.position - transform.position).magnitude;
 
-		if(Targets.objects.Count > 1)
+		if(targets.Length > 1)
 		{
-			foreach(GameObject obj in Targets.objects)
+			foreach(GameObject obj in targets)
 			{
 				Vector2 dir = obj.transform.position - transform.position;
 				float distance = dir.magnitude;

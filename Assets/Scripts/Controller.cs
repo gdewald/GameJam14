@@ -15,7 +15,7 @@ public class Controller : MonoBehaviour {
 
 	void Start () {
 		shotTimer = 0.0f;
-		Targets.objects.Add (this.gameObject);
+		//Targets.objects.Add (this.gameObject);
 		Resources.Load ("Bullet");
 	}
 

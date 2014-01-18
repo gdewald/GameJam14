@@ -4,6 +4,8 @@ using System.Collections;
 public class BulletCollide : MonoBehaviour {
 	public float speed;
 
+	//GameObject explosion = Resources.Load("Explosion") as GameObject;
+
 	void Update(){
 		Vector2 vel = transform.rigidbody2D.velocity;
 		if (vel.magnitude < speed) {
@@ -13,11 +15,18 @@ public class BulletCollide : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D other){
 		GameObject obj = other.gameObject;
+
 		if (obj.tag == "Enemy") {
 			++Game.numKilled;
+
+			//GameObject expl = Instantiate(explosion, obj.transform.position, Quaternion.identity) as GameObject;
+
 			Destroy (obj);
 			Destroy (gameObject);
-		} else if (obj.tag == "Wall") {
+
+			//Destroy(expl, 3f);
+		} 
+		else if (obj.tag == "Wall") {
 			Destroy (gameObject);
 		}
 	}

@@ -23,8 +23,7 @@ public class CreateChain : MonoBehaviour {
 	void Start () {
 		//Rigidbody2D body = from.AddComponent<Rigidbody2D>();
 		//body.isKinematic = true;
-		to.AddComponent<HingeJoint2D>();
-		to.GetComponent<Rigidbody2D>().isKinematic = true;
+		//to.GetComponent<Rigidbody2D>().isKinematic = true;
 	
 	}
 

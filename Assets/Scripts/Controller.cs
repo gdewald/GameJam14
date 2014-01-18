@@ -2,6 +2,7 @@
 using System.Collections;
 
 public class Controller : MonoBehaviour {
+	public bool canShoot;
 
 	public float maxSpeed;
 	public float shotDelay;
@@ -46,7 +47,7 @@ public class Controller : MonoBehaviour {
 		float rightH = Input.GetAxis (aimAxis + "X");
 		float rightV = Input.GetAxis (aimAxis + "Y");
 		Vector2 rightStick = new Vector2 (rightH, rightV);
-		if(rightStick.magnitude >= 0.25f)
+		if(canShoot && rightStick.magnitude >= 0.25f)
 			Shoot (rightStick);
 	}
 

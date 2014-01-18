@@ -16,6 +16,9 @@ public class CreateChain : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		if(from == null)
+			from = this.gameObject;
+	
 		Rigidbody2D body = from.AddComponent<Rigidbody2D>();
 		body.isKinematic = true;
 		to.AddComponent<HingeJoint2D>();
@@ -70,9 +73,14 @@ public class CreateChain : MonoBehaviour {
 			pos_from += v1 * link_len;
 		}
 		
-		to.GetComponent<HingeJoint2D>().connectedBody = link.rigidbody2D;
+		HingeJoint2D h = link.AddComponent<HingeJoint2D>();
+		h.connectedBody = to.rigidbody2D;
 		//link.AddComponent<Rigidbody2D>();
 		//to.AddComponent<HingeJoint2D>();
 		//to.GetComponent<HingeJoint2D>().connectedBody = link.rigidbody2D;
+	}
+	
+	void ChainSetEnd(GameObject end) {
+		to = end;
 	}
 }

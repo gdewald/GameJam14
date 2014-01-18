@@ -6,7 +6,6 @@ public class Title : MonoBehaviour {
 	public Font font;
 
 	GUIStyle style = new GUIStyle();
-	GUIStyle bg = new GUIStyle();
 
 	void Start(){
 		style.normal.textColor = Color.white;

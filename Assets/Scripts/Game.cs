@@ -4,7 +4,8 @@ using System.Collections;
 public class Game : MonoBehaviour {
 
 	public static GameObject pfCube;
-	
+	public static int numKilled = 0;
+
 	void Awake(){
 		pfCube = Resources.Load("Cube") as GameObject;
 	}
@@ -12,4 +13,5 @@ public class Game : MonoBehaviour {
 	void Start () {
 		Player.entity[0] = Instantiate(pfCube) as GameObject;
 	}
+	
 }

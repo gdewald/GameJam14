@@ -14,11 +14,10 @@ public class Player : MonoBehaviour {
 
 	bool doDestroy = false;
 
+	float splitSpeed = 0.3f;	// lower is faster
+	float combineSpeed = 0.5f;	// lower is faster
 	float rate = 0f;
 	float[] iArr = {0f, 0f};
-
-	void Start () {
-	}
 
 	void Update () {
 		if(doCombine){
@@ -36,9 +35,9 @@ public class Player : MonoBehaviour {
 
 
 	#region Actions
-	bool csHelp(){
-		MoveObject(entity[0].transform, startPoint[0], endPoint[0], 1f, ref iArr[0]);
-		MoveObject(entity[1].transform, startPoint[1], endPoint[1], 1f, ref iArr[1]);
+	bool csHelp(float speed){
+		MoveObject(entity[0].transform, startPoint[0], endPoint[0], speed, ref iArr[0]);
+		MoveObject(entity[1].transform, startPoint[1], endPoint[1], speed, ref iArr[1]);
 		
 		if(Mathf.Approximately(entity[0].transform.position.x, endPoint[0].x) && 
 		   Mathf.Approximately(entity[1].transform.position.x, endPoint[1].x) &&
@@ -55,7 +54,7 @@ public class Player : MonoBehaviour {
 	}
 
 	void combine(){
-		if(csHelp()){
+		if(csHelp(combineSpeed)){
 			doCombine = false;
 			doDestroy = true;
 			entity[0].GetComponent<Controller>().canShoot = true;
@@ -63,7 +62,7 @@ public class Player : MonoBehaviour {
 	}
 
 	void split(){
-		if(csHelp()){
+		if(csHelp(splitSpeed)){
 			doSplit = false;
 			entity[0].GetComponent<Controller>().canShoot = false;
 		}

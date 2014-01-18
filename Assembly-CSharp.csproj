@@ -51,6 +51,9 @@
      <Compile Include="Assets\Scripts\GameInput.cs" />
      <Compile Include="Assets\Scripts\GameLogic.cs" />
      <Compile Include="Assets\Scripts\Player.cs" />
+     <Compile Include="Assets\Scripts\Title.cs" />
+     <None Include="Assets\Resources\Fonts\LICENSE.txt" />
+     <None Include="Assets\Resources\Fonts\FONTLOG.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

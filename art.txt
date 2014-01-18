@@ -1,0 +1,6 @@
+
+explosion:
+http://opengameart.org/content/explosion-sheet
+
+atari boom:
+http://opengameart.org/content/atari-booms

@@ -23,6 +23,7 @@ public class BulletCollide : MonoBehaviour {
 
 			//Destroy (obj, 3f);
 			Destroy (gameObject);
+			--GameLogic.EnemyCount;
 		} 
 		else if (obj.tag == "Wall") {
 			Destroy (gameObject);

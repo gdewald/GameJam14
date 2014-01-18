@@ -66,11 +66,13 @@ public class Player : MonoBehaviour {
 		if(csHelp()){
 			doSplit = false;
 			entity[0].GetComponent<Controller>().canShoot = false;
+			entity[0].GetComponent<CreateChain>().SendMessage("ToggleChain");
 		}
 	}
 
 	void destory(){
 		doDestroy = false;
+		entity[0].GetComponent<CreateChain>().SendMessage("ToggleChain");
 		entity[1].SetActive(false);
 	}
 	#endregion Actions

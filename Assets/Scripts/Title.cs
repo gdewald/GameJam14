@@ -9,14 +9,21 @@ public class Title : MonoBehaviour {
 	GUIStyle bg = new GUIStyle();
 
 	void Start(){
-		style.normal.textColor = "#fff";
-		style.fontSize = 12;
+		style.normal.textColor = Color.white;
 		style.font = font;
 	}
 
 	void OnGUI() {
-		GUI.color = "#000";
-		GUI.Box(new Rect(0, 0, 300, 300));
-		GUI.Label(new Rect(10, 10, 100, 20), "Working Title", style);
+		style.fontSize = 36;
+		GUI.Label(new Rect(Screen.width/2 - 214, Screen.height/4, 100, 100), "Working Title", style);
+
+		style.fontSize = 14;
+		GUI.Label(new Rect(Screen.width/2 - 78, Screen.height/2, 100, 100), "Press Enter", style);
+	}
+
+	void Update(){
+		if(Input.GetKeyDown(KeyCode.Return)){
+			Application.LoadLevel("main");
+		}
 	}
 }

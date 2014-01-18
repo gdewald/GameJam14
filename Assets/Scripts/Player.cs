@@ -3,29 +3,24 @@ using System.Collections;
 
 public class Player : MonoBehaviour {
 
-	public bool isSplit = false;
+	public static GameObject[] entity = new GameObject[2];
 
-	bool doCombine = false;
-	bool doSplit = false;
+	public static bool isSplit = false;
+	public static bool doCombine = false;
+	public static bool doSplit = false;
+
+	public static Vector3[] startPoint = new Vector3[2];
+	public static Vector3[] endPoint = new Vector3[2];
+
 	bool doDestroy = false;
 
-	Vector2[] startPoint = new Vector2[2];
-	Vector2[] endPoint = new Vector2[2];
-	
 	float rate = 0f;
 	float[] iArr = {0f, 0f};
 
 	void Start () {
-		startPoint[0] = new Vector2(-1, 0);
-		startPoint[1] = new Vector2(1, 0);
-
-		endPoint[0] = Vector2.zero;
-		endPoint[1] = Vector2.zero;
 	}
 
 	void Update () {
-
-
 		if(doCombine){
 			combine();
 		}
@@ -39,31 +34,42 @@ public class Player : MonoBehaviour {
 		}
 	}
 
-	void getInput(){
-
-	}
-
 
 	#region Actions
-	void combine(){
-		MoveObject(Game.cube[0].transform, startPoint[0], endPoint[0], 1f, ref iArr[0]);
-		MoveObject(Game.cube[1].transform, startPoint[1], endPoint[0], 1f, ref iArr[1]);
+	bool csHelp(){
+		MoveObject(entity[0].transform, startPoint[0], endPoint[0], 1f, ref iArr[0]);
+		MoveObject(entity[1].transform, startPoint[1], endPoint[1], 1f, ref iArr[1]);
 		
-		if(Mathf.Approximately(Game.cube[0].transform.position.x, 0f) && 
-		   Mathf.Approximately(Game.cube[1].transform.position.x, 0f)
-	    ){
+		if(Mathf.Approximately(entity[0].transform.position.x, endPoint[0].x) && 
+		   Mathf.Approximately(entity[1].transform.position.x, endPoint[1].x) &&
+		   Mathf.Approximately(entity[0].transform.position.y, endPoint[0].y) && 
+		   Mathf.Approximately(entity[1].transform.position.y, endPoint[1].y)
+	   ){
+			iArr[0] = 0f;
+			iArr[1] = 0f;
+
+			return true;
+		}
+
+		return false;
+	}
+
+	void combine(){
+		if(csHelp()){
 			doCombine = false;
 			doDestroy = true;
 		}
 	}
 
 	void split(){
-
+		if(csHelp()){
+			doSplit = false;
+		}
 	}
 
 	void destory(){
 		doDestroy = false;
-		Destroy(Game.cube[1]);
+		Destroy(entity[1]);
 	}
 	#endregion Actions
 

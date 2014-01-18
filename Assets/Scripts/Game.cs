@@ -4,17 +4,12 @@ using System.Collections;
 public class Game : MonoBehaviour {
 
 	public static GameObject pfCube;
-	public static GameObject[] cube = new GameObject[2];
-
+	
 	void Awake(){
 		pfCube = Resources.Load("Cube") as GameObject;
 	}
-
-	void Start () {
-		cube[0] = Instantiate(pfCube) as GameObject;
-	}
-
-	void Update () {
 	
+	void Start () {
+		Player.entity[0] = Instantiate(pfCube) as GameObject;
 	}
 }

@@ -11,11 +11,11 @@ public class Game : MonoBehaviour {
 		pfPlayerSecondary = Resources.Load("PlayerSecondary") as GameObject;
 	}
 	
-	void Start () {
+	void Start(){
 		Player.entity[0] = Instantiate(pfPlayerPrimary) as GameObject;
-		Player.entity[1] = Instantiate (pfPlayerSecondary) as GameObject;
+		Player.entity[1] = Instantiate(pfPlayerSecondary) as GameObject;
 		
-		Player.entity[0].transform.position += Vector3.left * 5;
+		//Player.entity[0].transform.position += Vector3.left * 5;
 		
 		Player.entity[0].GetComponent("CreateChain").SendMessage("ChainSetEnd", Player.entity[1]);
 		

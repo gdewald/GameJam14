@@ -19,7 +19,7 @@ public class Controller : MonoBehaviour {
 		Resources.Load ("Bullet");
 	}
 
-	void Update () {
+	void FixedUpdate () {
 		float leftH = Input.GetAxis (movementAxis + "X");
 		float leftV = Input.GetAxis (movementAxis + "Y");
 
@@ -49,6 +49,11 @@ public class Controller : MonoBehaviour {
 		Vector2 rightStick = new Vector2 (rightH, rightV);
 		if(canShoot && rightStick.magnitude >= 0.25f)
 			Shoot (rightStick);
+			
+
+		if(rigidbody2D.velocity.magnitude > .1f)
+			transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, 0,  -Mathf.Atan2(leftH, leftV) * Mathf.Rad2Deg + 90), Time.deltaTime * rigidbody2D.velocity.magnitude)	;
+
 	}
 
 	void Shoot(Vector2 direction)

@@ -14,6 +14,10 @@ public class CreateChain : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		Rigidbody2D body = from.AddComponent<Rigidbody2D>();
+		body.isKinematic = true;
+		to.AddComponent<HingeJoint2D>();
+		to.GetComponent<Rigidbody2D>().isKinematic = true;
 	
 	}
 	
@@ -45,6 +49,8 @@ public class CreateChain : MonoBehaviour {
 			if(temp != null)
 				joint.connectedBody = temp.rigidbody2D;
 			else joint.connectedBody = from.rigidbody2D;
+			
+			link.AddComponent<BoxCollider2D>();
 			
 			link.transform.localScale = new Vector3(link_len,min_link_width,1);	
 			link.transform.position = pos_from;

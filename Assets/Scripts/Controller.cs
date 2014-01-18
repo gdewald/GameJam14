@@ -49,10 +49,18 @@ public class Controller : MonoBehaviour {
 		Vector2 rightStick = new Vector2 (rightH, rightV);
 		if(canShoot && rightStick.magnitude >= 0.25f)
 			Shoot (rightStick);
+
 			
 
 		if(rigidbody2D.velocity.magnitude > .1f)
 			transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, 0,  -Mathf.Atan2(leftH, leftV) * Mathf.Rad2Deg + 90), Time.deltaTime * rigidbody2D.velocity.magnitude)	;
+
+
+
+		// toggle split
+		if(Input.GetButtonDown("ToggleSplit")){
+			toggleSplit();
+		}
 
 	}
 
@@ -69,9 +77,23 @@ public class Controller : MonoBehaviour {
 
 			GameObject bullet = (GameObject) Instantiate(Resources.Load("Bullet"), pos, Quaternion.identity) ;
 			bullet.rigidbody2D.velocity = direction;
-
-			//Rigidbody2D bullet = Instantiate(Resources.Load("Bullet"), pos, Quaternion.identity) as Rigidbody2D;
-			//bullet.velocity = direction * BulletCollide.speed;
 		}
+	}
+
+	void toggleSplit(){
+		// don't toggle until split or combine has finished
+		if(Player.isAnimating){
+			return;
+		}
+		
+		if(!Player.isSplit){
+			Player.entity[1].SetActive(true);
+			Player.that.split();
+		} 
+		else {
+			Player.that.combine();
+		}
+		
+		Player.isSplit = !Player.isSplit;
 	}
 }

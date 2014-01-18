@@ -14,8 +14,9 @@ public class Follow : MonoBehaviour {
 	}
 
 	void Update () {
-		if (Targets.objects.Count == 0)
+		if (Targets.objects.Count == 0){
 			return;
+		}
 
 		GameObject closestObj = Targets.objects[0];
 		float closestDist = (Targets.objects [0].transform.position - transform.position).magnitude;
@@ -37,6 +38,5 @@ public class Follow : MonoBehaviour {
 
 		Vector2 moveDir = closestObj.transform.position - transform.position;
 		rigidbody2D.velocity = moveDir.normalized * maxSpeed;
-
 	}
 }

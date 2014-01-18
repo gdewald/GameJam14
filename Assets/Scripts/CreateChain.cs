@@ -10,7 +10,9 @@ public class CreateChain : MonoBehaviour {
 	public const float min_link_len = .1f;
 	public const float min_link_width = .1f;
 	
-	List<GameObject> links;
+	public string keyName = "Fire2";
+	
+	GameObject chain = null;
 
 	// Use this for initialization
 	void Start () {
@@ -23,10 +25,15 @@ public class CreateChain : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		CreateLinks();
-		this.enabled = false;
-		
+		if(Input.GetButtonDown(keyName))
+			ToggleChain();		
+	}
 	
+	void ToggleChain() {
+		if(chain == null) {
+			CreateLinks();
+		}
+		else Destroy(chain);
 	}
 	
 	void CreateLinks() {
@@ -41,7 +48,7 @@ public class CreateChain : MonoBehaviour {
 		int num_links = Mathf.FloorToInt(dist/min_link_len);
 		float link_len = dist/num_links;
 		
-		GameObject chain= new GameObject("Chain");
+		chain= new GameObject("Chain");
 
 		GameObject link = null;
 		for(int i = 0; i < num_links; i++) {

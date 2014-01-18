@@ -9,6 +9,12 @@ public class GameInput : MonoBehaviour {
 	}
 
 	void toggleSplit(){
+
+		// don't toggle until split or combine has finished
+		if(Player.doSplit || Player.doCombine){
+			return;
+		}
+
 		if (!Player.isSplit) {
 			Player.startPoint[0] = Player.entity[0].transform.position;
 			Player.startPoint[1] = Player.entity[0].transform.position;

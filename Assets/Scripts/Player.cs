@@ -44,7 +44,7 @@ public class Player : MonoBehaviour {
 		   Mathf.Approximately(entity[1].transform.position.x, endPoint[1].x) &&
 		   Mathf.Approximately(entity[0].transform.position.y, endPoint[0].y) && 
 		   Mathf.Approximately(entity[1].transform.position.y, endPoint[1].y)
-	   ){
+	    ){
 			iArr[0] = 0f;
 			iArr[1] = 0f;
 

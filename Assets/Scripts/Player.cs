@@ -3,87 +3,110 @@ using System.Collections;
 
 public class Player : MonoBehaviour {
 
+	public static Player that;
+
 	public static GameObject[] entity = new GameObject[2];
 
 	public static bool isSplit = false;
-	public static bool doCombine = false;
-	public static bool doSplit = false;
+	public static bool isAnimating = false;
 
-	public static Vector3[] startPoint = new Vector3[2];
-	public static Vector3[] endPoint = new Vector3[2];
+	float splitSpeed = 0.3f;	// lower is faster
+	float combineSpeed = 0.5f;	// lower is faster
+	int doneMoving = 0;
 
-	bool doDestroy = false;
-
-	float rate = 0f;
-	float[] iArr = {0f, 0f};
-
-	void Start () {
-	}
-
-	void Update () {
-		if(doCombine){
-			combine();
-		}
-
-		if(doSplit){
-			split();
-		}
-
-		if(doDestroy){
-			destory();
-		}
+	void Awake(){
+		that = this;
 	}
 
 
 	#region Actions
-	bool csHelp(){
-		MoveObject(entity[0].transform, startPoint[0], endPoint[0], 1f, ref iArr[0]);
-		MoveObject(entity[1].transform, startPoint[1], endPoint[1], 1f, ref iArr[1]);
+	public void combine(){
+		Player.isAnimating = true;
+		doneMoving = 0;
+
+		float x = Player.entity[0].transform.position.x + Player.entity[1].transform.position.x;
+		float y = Player.entity[0].transform.position.y + Player.entity[1].transform.position.y;
 		
-		if(Mathf.Approximately(entity[0].transform.position.x, endPoint[0].x) && 
-		   Mathf.Approximately(entity[1].transform.position.x, endPoint[1].x) &&
-		   Mathf.Approximately(entity[0].transform.position.y, endPoint[0].y) && 
-		   Mathf.Approximately(entity[1].transform.position.y, endPoint[1].y)
-	    ){
-			iArr[0] = 0f;
-			iArr[1] = 0f;
+		Vector3 newPos = new Vector3(x/2, y/2, 0);
 
-			return true;
-		}
-
-		return false;
+		StartCoroutine(MoveToPosition(
+			Player.entity[0].transform, 
+			newPos,
+			combineSpeed,
+			false
+		));
+		
+		StartCoroutine(MoveToPosition(
+			Player.entity[1].transform,
+			newPos,
+			combineSpeed,
+			false
+		));
 	}
 
-	void combine(){
-		if(csHelp()){
-			doCombine = false;
-			doDestroy = true;
-			entity[0].GetComponent<Controller>().canShoot = true;
-		}
-	}
-
-	void split(){
-		if(csHelp()){
-			doSplit = false;
-			entity[0].GetComponent<Controller>().canShoot = false;
-			entity[0].GetComponent<CreateChain>().SendMessage("ToggleChain");
-		}
-	}
-
-	void destory(){
-		doDestroy = false;
+	void combineFinished(){
+		Player.isAnimating = false;
 		entity[0].GetComponent<CreateChain>().SendMessage("ToggleChain");
 		entity[1].SetActive(false);
+		entity[0].GetComponent<Controller>().canShoot = true;
 	}
+		
+	public void split(){
+		Player.isAnimating = true;
+		doneMoving = 0;
+
+		Player.entity[1].transform.position = Player.entity[0].transform.position;
+		entity[0].GetComponent<Controller>().canShoot = false;
+
+		StartCoroutine(MoveToPosition(
+			Player.entity[0].transform, 
+			new Vector3(Player.entity[0].transform.position.x - 2, Player.entity[0].transform.position.y),
+			splitSpeed,
+			true
+		));
+
+		StartCoroutine(MoveToPosition(
+			Player.entity[1].transform,
+			new Vector3(Player.entity[1].transform.position.x + 2, Player.entity[1].transform.position.y),
+			splitSpeed,
+			true
+		));
+		
+	}
+
+	void splitFinished(){
+		Player.isAnimating = false;
+		entity[0].GetComponent<CreateChain>().SendMessage("ToggleChain");
+		
+	}
+	
 	#endregion Actions
 
 	#region Utilities
-	void MoveObject (Transform thisTransform, Vector3 startPos, Vector3 endPos, float time, ref float i) {
-		rate = 1f / time;
-		
-		if (i < 1f){
-			i += Time.deltaTime * rate;
-			thisTransform.position = Vector3.Lerp(startPos, endPos, i);
+	IEnumerator MoveToPosition(Transform tForm, Vector3 newPos, float time, bool fromSplit){
+		float elapsedTime = 0;
+		Vector3 startingPos = tForm.position;
+
+		while (elapsedTime < time){
+			tForm.position = Vector3.Lerp(startingPos, newPos, (elapsedTime / time));
+			elapsedTime += Time.deltaTime;
+
+
+			if(elapsedTime >= time){
+				if(++doneMoving == 2){
+
+					// TODO: use a lambda callback instead
+
+					if(fromSplit){
+						splitFinished();
+					}
+					else {
+						combineFinished();
+					}
+				}
+			}
+
+			yield return null;
 		}
 	}
 	#endregion Utilities

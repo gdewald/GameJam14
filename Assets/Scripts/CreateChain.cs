@@ -14,19 +14,20 @@ public class CreateChain : MonoBehaviour {
 	
 	GameObject chain = null;
 
-	// Use this for initialization
-	void Start () {
-		if(from == null)
+	void Awake(){
+		if(from == null){
 			from = this.gameObject;
-	
-		Rigidbody2D body = from.AddComponent<Rigidbody2D>();
-		body.isKinematic = true;
+		}
+	}
+
+	void Start () {
+		//Rigidbody2D body = from.AddComponent<Rigidbody2D>();
+		//body.isKinematic = true;
 		to.AddComponent<HingeJoint2D>();
 		to.GetComponent<Rigidbody2D>().isKinematic = true;
 	
 	}
-	
-	// Update is called once per frame
+
 	void Update () {
 		if(Input.GetButtonDown(keyName))
 			ToggleChain();		
@@ -56,7 +57,7 @@ public class CreateChain : MonoBehaviour {
 		GameObject link = null;
 		for(int i = 0; i < num_links; i++) {
 			GameObject temp = link;
-			link = 	GameObject.Instantiate(linkPrefab) as GameObject;
+			link = 	Instantiate(linkPrefab) as GameObject;
 			link.transform.parent = chain.transform;
 			HingeJoint2D joint = link.GetComponent<HingeJoint2D>();
 			if(temp != null)

@@ -3,12 +3,17 @@ using System.Collections;
 
 public class Game : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-	
+	public static GameObject pfCube;
+	public static GameObject[] cube = new GameObject[2];
+
+	void Awake(){
+		pfCube = Resources.Load("Cube") as GameObject;
 	}
-	
-	// Update is called once per frame
+
+	void Start () {
+		cube[0] = Instantiate(pfCube) as GameObject;
+	}
+
 	void Update () {
 	
 	}

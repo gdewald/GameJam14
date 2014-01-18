@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class AutozoomScript : MonoBehaviour {
+	//Follow player(s)?
+	public bool playerFollow;
 	public List<GameObject> objects;
 	public Camera camera;
 	
@@ -14,11 +16,15 @@ public class AutozoomScript : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-
+		if(playerFollow) {
+			objects.Add(Player.entity[0]);
+			objects.Add(Player.entity[1]);
+		}
 	}
 	
 	// Update is called once per frame
 	void FixedUpdate () {
+
 	
 		calcBoundingBox();
 	
@@ -39,6 +45,7 @@ public class AutozoomScript : MonoBehaviour {
 		Vector3 lr = objects[0].transform.position;
 		
 		foreach(GameObject o in objects) {
+				if(o.activeSelf) {
 				if(o.transform.position.x < ul.x)
 					ul.x = o.transform.position.x;
 				if(o.transform.position.y > ul.y)
@@ -47,6 +54,7 @@ public class AutozoomScript : MonoBehaviour {
 					lr.x = o.transform.position.x;			
 				if(o.transform.position.y < lr.y)
 					lr.y = o.transform.position.y;
+					}
 		}
 		
 		//Debug.Log("ul=("+ul.x+","+ul.y+") lr=("+lr.x+","+lr.y+")"	); 
@@ -57,6 +65,10 @@ public class AutozoomScript : MonoBehaviour {
 		size = Mathf.Max(Mathf.Abs(ul.y - lr.y), Mathf.Abs(lr.x - ul.x))/2;
 		//some padding
 		size *= 1.1f;	
+	}
+	
+	void addTrackedObject(GameObject o) {
+		objects.Add(o);
 	}
 
 }

@@ -58,18 +58,20 @@ public class Player : MonoBehaviour {
 		if(csHelp()){
 			doCombine = false;
 			doDestroy = true;
+			entity[0].GetComponent<Controller>().canShoot = true;
 		}
 	}
 
 	void split(){
 		if(csHelp()){
 			doSplit = false;
+			entity[0].GetComponent<Controller>().canShoot = false;
 		}
 	}
 
 	void destory(){
 		doDestroy = false;
-		Destroy(entity[1]);
+		entity[1].SetActive(false);
 	}
 	#endregion Actions
 

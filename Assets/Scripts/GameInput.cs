@@ -29,7 +29,7 @@ public class GameInput : MonoBehaviour {
 			Player.endPoint[0] = pos0;
 			Player.endPoint[1] = pos1;
 
-			Player.entity[1] = Instantiate(Game.pfCube, Player.entity[0].transform.position, Quaternion.identity) as GameObject;
+			Player.entity[1].SetActive(true);
 			Player.doSplit = true;
 		} 
 		else {

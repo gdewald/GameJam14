@@ -63,8 +63,6 @@ public class CreateChain : MonoBehaviour {
 				joint.connectedBody = temp.rigidbody2D;
 			else joint.connectedBody = from.rigidbody2D;
 			
-			link.AddComponent<BoxCollider2D>();
-			
 			link.transform.localScale = new Vector3(link_len,min_link_width,1);	
 			link.transform.position = pos_from;
 			link.transform.rotation = Quaternion.AngleAxis(-Vector3.Angle(Vector3.right, v1), new Vector3(0.0f,0.0f,1.0f));

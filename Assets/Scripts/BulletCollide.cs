@@ -6,7 +6,7 @@ public class BulletCollide : MonoBehaviour {
 
 	void Update(){
 		Vector2 vel = transform.rigidbody2D.velocity;
-		if (vel.magnitude < speed) {
+		if(vel.magnitude < speed){
 			transform.rigidbody2D.velocity = vel.normalized * speed;
 		}
 	}
@@ -14,18 +14,19 @@ public class BulletCollide : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D other){
 		GameObject obj = other.gameObject;
 
-		if (obj.tag == "Enemy") {
+		if(obj.tag == "Enemy"){
 			++Game.numKilled;
 
+			print ("dying");
+
 			Animator anim = other.GetComponent<Animator>();
+			anim.SetBool("Dying", true);
 
-			obj.animation.Play("follow");
-
-			//Destroy (obj, 3f);
+			Destroy (obj, 1f);
 			Destroy (gameObject);
 			--GameLogic.EnemyCount;
 		} 
-		else if (obj.tag == "Wall") {
+		else if(obj.tag == "Wall"){
 			Destroy (gameObject);
 		}
 	}

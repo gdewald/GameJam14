@@ -7,7 +7,7 @@ public class CreateChain : MonoBehaviour {
 	public float offset = 0.5f;
 	
 	public GameObject linkPrefab;
-	public const float min_link_len = .3f;
+	public const float min_link_len = .1f;
 	public const float min_link_width = .1f;
 	
 	List<GameObject> links;
@@ -40,11 +40,14 @@ public class CreateChain : MonoBehaviour {
 		
 		int num_links = Mathf.FloorToInt(dist/min_link_len);
 		float link_len = dist/num_links;
+		
+		GameObject chain= new GameObject("Chain");
 
 		GameObject link = null;
 		for(int i = 0; i < num_links; i++) {
 			GameObject temp = link;
-			link = GameObject.Instantiate(linkPrefab) as GameObject;
+			link = 	GameObject.Instantiate(linkPrefab) as GameObject;
+			link.transform.parent = chain.transform;
 			HingeJoint2D joint = link.GetComponent<HingeJoint2D>();
 			if(temp != null)
 				joint.connectedBody = temp.rigidbody2D;

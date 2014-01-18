@@ -1,6 +1,9 @@
 GameJam14
 =========
 
-jonwiedmann@gmail.com Jon Wiedmann
 
-IsaiahHines@gmail.com Isaiah Hines
+Team Members
+------------
+* jonwiedmann@gmail.com Jon Wiedmann
+* IsaiahHines@gmail.com Isaiah Hines
+* ndeden@umich.edu Nicholas Dedenbach

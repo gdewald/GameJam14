@@ -14,6 +14,7 @@ public class BulletCollide : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D other){
 		GameObject obj = other.gameObject;
 		if (obj.tag == "Enemy") {
+			++Game.numKilled;
 			Destroy (obj);
 			Destroy (gameObject);
 		} else if (obj.tag == "Wall") {

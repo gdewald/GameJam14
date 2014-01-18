@@ -49,6 +49,11 @@ public class Controller : MonoBehaviour {
 		Vector2 rightStick = new Vector2 (rightH, rightV);
 		if(canShoot && rightStick.magnitude >= 0.25f)
 			Shoot (rightStick);
+
+		// toggle split
+		if(Input.GetButtonDown("ToggleSplit")){
+			toggleSplit();
+		}
 	}
 
 	void Shoot(Vector2 direction)
@@ -64,9 +69,44 @@ public class Controller : MonoBehaviour {
 
 			GameObject bullet = (GameObject) Instantiate(Resources.Load("Bullet"), pos, Quaternion.identity) ;
 			bullet.rigidbody2D.velocity = direction;
-
-			//Rigidbody2D bullet = Instantiate(Resources.Load("Bullet"), pos, Quaternion.identity) as Rigidbody2D;
-			//bullet.velocity = direction * BulletCollide.speed;
 		}
+	}
+
+	void toggleSplit(){
+		
+		// don't toggle until split or combine has finished
+		if(Player.doSplit || Player.doCombine){
+			return;
+		}
+		
+		if (!Player.isSplit) {
+			Player.startPoint[0] = Player.entity[0].transform.position;
+			Player.startPoint[1] = Player.entity[0].transform.position;
+			
+			Vector3 pos0 = new Vector3(Player.entity[0].transform.position.x - 2, Player.entity[0].transform.position.y, 0);
+			Vector3 pos1 = new Vector3(Player.entity[0].transform.position.x + 2, Player.entity[0].transform.position.y, 0);
+			
+			Player.endPoint[0] = pos0;
+			Player.endPoint[1] = pos1;
+			
+			Player.entity[1].SetActive(true);
+			Player.doSplit = true;
+		} 
+		else {
+			Player.startPoint[0] = Player.entity[0].transform.position;
+			Player.startPoint[1] = Player.entity[1].transform.position;
+			
+			float x = Player.entity[0].transform.position.x + Player.entity[1].transform.position.x;
+			float y = Player.entity[0].transform.position.y + Player.entity[1].transform.position.y;
+			
+			Vector3 pos = new Vector3(x/2, y/2, 0);
+			
+			Player.endPoint[0] = pos;
+			Player.endPoint[1] = pos;
+			
+			Player.doCombine = true;
+		}
+		
+		Player.isSplit = !Player.isSplit;
 	}
 }

@@ -50,4 +50,8 @@ public class Follow : MonoBehaviour {
 
 		gameObject.rigidbody2D.mass = 40.0f;
 	}
+
+	public bool IsDelayed(){
+		return delayTime > 0.0f;
+	}
 }

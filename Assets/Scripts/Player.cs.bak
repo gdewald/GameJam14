@@ -20,7 +20,6 @@ public class Player : MonoBehaviour {
 		that = this;
 	}
 
-
 	#region Actions
 	public void combine(){
 		Player.isAnimating = true;

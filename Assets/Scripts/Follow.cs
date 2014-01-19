@@ -5,11 +5,18 @@ using System.Collections.Generic;
 public class Follow : MonoBehaviour {
 	public float maxSpeed;
 
+	private float delayTime = 0.0f;
+
 	void Start(){
 
 	}
 
 	void Update () {
+		if (delayTime > 0.0f) {
+			delayTime -= Time.deltaTime;
+			return;
+		}
+
 		GameObject[] targets = GameObject.FindGameObjectsWithTag("Target");
 		if (targets.Length == 0){
 			return;
@@ -35,5 +42,9 @@ public class Follow : MonoBehaviour {
 
 		Vector2 moveDir = closestObj.transform.position - transform.position;
 		rigidbody2D.velocity = moveDir.normalized * maxSpeed;
+	}
+
+	public void SetDelay(float delay){
+		delayTime = delay;
 	}
 }

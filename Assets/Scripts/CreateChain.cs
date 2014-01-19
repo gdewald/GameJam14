@@ -12,6 +12,8 @@ public class CreateChain : MonoBehaviour {
 	
 	public string keyName = "Fire2";
 	
+	public bool canToggle = false;
+	
 	GameObject chain = null;
 
 	void Awake(){
@@ -28,7 +30,7 @@ public class CreateChain : MonoBehaviour {
 	}
 
 	void Update () {
-		if(Input.GetButtonDown(keyName))
+		if(canToggle && Input.GetButtonDown(keyName))
 			ToggleChain();		
 	}
 	

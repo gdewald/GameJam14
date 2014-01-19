@@ -36,6 +36,7 @@ class SpawnWave {
 		// Spawn Enemies
 		if (spawnTime <= 0.0f) {
 			GameLogic.gameLogic.StartCoroutine(Spawn ());
+			GameAudio.that.playWaveStart();
 		}
 	}
 

@@ -118,8 +118,8 @@ public class GameLogic : MonoBehaviour {
 	public void Start(){
 		gameLogic = this;
 
-		roundWalls[0] = Resources.Load<GameObject>("Walls/Round1");
-		roundWalls[1] = Resources.Load<GameObject>("Walls/Round2");
+		roundWalls[0] = Resources.Load<GameObject>("Round1");
+		roundWalls[1] = Resources.Load<GameObject>("Round2");
 
 		SetupGame ();
 	}

@@ -113,14 +113,10 @@ public class GameLogic : MonoBehaviour {
 	static public int roundNumber = 1;
 	static public int waveNumber = 0;
 
-	GameObject[] roundWalls = new GameObject[2];
+
 
 	public void Start(){
 		gameLogic = this;
-
-		roundWalls[0] = Resources.Load<GameObject>("Round1");
-		roundWalls[1] = Resources.Load<GameObject>("Round2");
-
 		SetupGame ();
 	}
 
@@ -138,14 +134,14 @@ public class GameLogic : MonoBehaviour {
 		// Round Complete
 		if (round.IsComplete ()) {
 			//TODO: add more rounds
-			if(roundNumber- 1 <= 1){
-
-				DestroyImmediate(roundWalls[roundNumber-1], true);
-				Instantiate(roundWalls[roundNumber++]);
-
-				Player.entity[0].transform.position = Vector3.zero;
-				Player.entity[1].transform.position = Vector3.zero;
-			}
+//			if(roundNumber- 1 <= 1){
+//
+//				DestroyImmediate(roundWalls[roundNumber-1], true);
+//				Instantiate(roundWalls[roundNumber++]);
+//
+//				Player.entity[0].transform.position = Vector3.zero;
+//				Player.entity[1].transform.position = Vector3.zero;
+//			}
 
 			rounds.RemoveAt(0);
 			++roundNumber;
@@ -154,9 +150,6 @@ public class GameLogic : MonoBehaviour {
 	}
 
 	void SetupGame(){
-		// add walls
-		Instantiate(roundWalls[0]);
-
 		// do rounds/waves
 		Round round;
 		Wave wave;

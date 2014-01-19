@@ -9,6 +9,7 @@ public class Player : MonoBehaviour {
 	
 	public static int life = 5;
 
+	public static bool isCombining = false;
 	public static bool isSplit = false;
 	public static bool isAnimating = false;
 
@@ -25,6 +26,7 @@ public class Player : MonoBehaviour {
 
 	#region Actions
 	public void combine(){
+		Player.isCombining = true;
 		Player.isAnimating = true;
 		doneMoving = 0;
 
@@ -48,6 +50,7 @@ public class Player : MonoBehaviour {
 			combineSpeed,
 			false
 		));
+
 	}
 
 	void combineFinished(){
@@ -110,7 +113,9 @@ public class Player : MonoBehaviour {
 					}
 					else {
 						combineFinished();
+						Player.isCombining = false;
 					}
+						
 				}
 			}
 

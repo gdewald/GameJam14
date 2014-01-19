@@ -6,8 +6,6 @@ public class Controller : MonoBehaviour {
 
 	public float maxSpeed;
 	public float shotDelay;
-
-	private float shotTimer;
 	
 	public string movementAxis = "LeftStick";
 	public string aimAxis = "RightStick";
@@ -16,6 +14,9 @@ public class Controller : MonoBehaviour {
 	
 	public enum FireMode { SINGLE, SPRAY };	
 	public FireMode fireMode = FireMode.SINGLE;
+	
+	private float shotTimer;
+	private float freezeTimer;
 
 	void Start(){
 		shotTimer = 0.0f;
@@ -26,6 +27,10 @@ public class Controller : MonoBehaviour {
 	void FixedUpdate(){
 		if(shotTimer > 0.0f){
 			shotTimer -= Time.deltaTime;
+		}
+		if (freezeTimer > 0.0f) {
+			freezeTimer -= Time.deltaTime;
+			return;
 		}
 
 		float leftH = Input.GetAxis (movementAxis + "X");
@@ -93,5 +98,9 @@ public class Controller : MonoBehaviour {
 		}
 		
 		Player.isSplit = !Player.isSplit;
+	}
+
+	public void FreezePlayer(float freezeTime){
+		freezeTimer = freezeTime;
 	}
 }

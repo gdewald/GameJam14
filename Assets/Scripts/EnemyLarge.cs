@@ -28,7 +28,8 @@ public class EnemyLarge : Enemy {
 		}
 		// Die
 		case 1:
-
+			GameAudio.that.playEnemyKilled(gameObject.transform.position);
+			die ();
 			break;
 		}
 	}

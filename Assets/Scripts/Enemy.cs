@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public abstract class Enemy : MonoBehaviour {
 	protected int hitsLeft;
@@ -10,10 +11,17 @@ public abstract class Enemy : MonoBehaviour {
 	public abstract void TakeChainHit (Vector2 chainDirection, int chainType);
 	public abstract void SetHitsLeft (int hitsLeft);
 
+	string[] powerups = new string[]{ "ChainPowerup", "ShieldPowerup", "SpeedPowerup", "SprayPowerup"};
+
 	public void die(bool countDeath = true){
 		Debug.Log("Die called");
 		if (countDeath) {
 			++Game.numKilled;
+			if(Game.numKilled % 15 == 1) {
+				string powerup_name = powerups[Random.Range(0, powerups.Length)];
+				Object powerup = Instantiate (Resources.Load(powerup_name), this.transform.position, this.transform.rotation);
+				powerup.name = powerup_name;
+			}
 		}
 
 		--GameLogic.EnemyCount;

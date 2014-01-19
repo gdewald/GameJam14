@@ -10,8 +10,11 @@ public abstract class Enemy : MonoBehaviour {
 
 	private GameObject enemyDeath = Resources.Load<GameObject>("EnemyDeath");
 
-	public void die(){
-		++Game.numKilled;
+	public void die(bool countDeath = true){
+		if (countDeath) {
+			++Game.numKilled;
+		}
+
 		--GameLogic.EnemyCount;
 		
 		GameObject explosion = Instantiate(enemyDeath, gameObject.transform.position, Quaternion.identity) as GameObject;

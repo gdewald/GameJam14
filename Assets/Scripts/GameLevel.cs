@@ -30,7 +30,7 @@ public class GameLevel : MonoBehaviour {
 	}
 	List<Round> theRounds;
 
-	GameObject wall;
+	GameObject wall, wallCircle;
 	GameObject spawnPoint;
 
 	void Awake(){
@@ -45,6 +45,7 @@ public class GameLevel : MonoBehaviour {
 
 		// load prefabs
 		wall = Resources.Load<GameObject>("Wall");
+		wallCircle = Resources.Load<GameObject>("WallCircle");
 		spawnPoint = Resources.Load<GameObject>("SpawnPoint");
 
 		//----- define the levels
@@ -94,7 +95,8 @@ public class GameLevel : MonoBehaviour {
 		SmartGameObject spTL2 = new SmartGameObject(new Vector3(-35, 25, 0), Vector3.zero, spawnPoint.transform.localScale);
 		SmartGameObject spTR2 = new SmartGameObject(new Vector3(35, 25, 0), Vector3.zero, spawnPoint.transform.localScale);
 		SmartGameObject spBL2 = new SmartGameObject(new Vector3(-35, -25, 0), Vector3.zero, spawnPoint.transform.localScale);
-		SmartGameObject spBR2 = new SmartGameObject(new Vector3(35, 25, 0), Vector3.zero, spawnPoint.transform.localScale);
+		SmartGameObject spBR2 = new SmartGameObject(new Vector3(35, -25, 0), Vector3.zero, spawnPoint.transform.localScale);
+		SmartGameObject spMid = new SmartGameObject(new Vector3(0, -5, 0), Vector3.zero, spawnPoint.transform.localScale);
 
 		Round lvl1 = new Round();
 		lvl1.walls = new List<SmartGameObject>();
@@ -113,6 +115,7 @@ public class GameLevel : MonoBehaviour {
 		lvl1.spawns.Add(spTR2);
 		lvl1.spawns.Add(spBL2);
 		lvl1.spawns.Add(spBR2);
+		lvl1.spawns.Add(spMid);
 
 		// add the round
 		theRounds.Add(lvl1);
@@ -128,12 +131,14 @@ public class GameLevel : MonoBehaviour {
 		SmartGameObject wallTop2 = new SmartGameObject(new Vector3(-0.877f, 1.987f, 0), new Vector3(0, 0, 90), new Vector3(2, 26, 0));
 		SmartGameObject wallTop3 = new SmartGameObject(new Vector3(25, 29, 0), new Vector3(0, 0, 90), new Vector3(2, 26, 0));
 		SmartGameObject wallBot = new SmartGameObject(new Vector3(0, -29, 0), new Vector3(0, 0, 90), new Vector3(2, 80, 0));
+		SmartGameObject wallCirc = new SmartGameObject(new Vector3(0, -14.5f, 0), Vector3.zero, wallCircle.transform.localScale);
 
-		// define spawn points 
+		// define spawn points
 		SmartGameObject spTL3 = new SmartGameObject(new Vector3(-35, 25, 0), Vector3.zero, spawnPoint.transform.localScale);
-		SmartGameObject spTR3 = new SmartGameObject(new Vector3(35, 25, 0), Vector3.zero, spawnPoint.transform.localScale);
 		SmartGameObject spBL3 = new SmartGameObject(new Vector3(-35, -25, 0), Vector3.zero, spawnPoint.transform.localScale);
-		SmartGameObject spBR3 = new SmartGameObject(new Vector3(35, 25, 0), Vector3.zero, spawnPoint.transform.localScale);
+		SmartGameObject spTR3 = new SmartGameObject(new Vector3(25, 25, 0), Vector3.zero, spawnPoint.transform.localScale);
+		SmartGameObject spTR32 = new SmartGameObject(new Vector3(35, 25, 0), Vector3.zero, spawnPoint.transform.localScale);
+		SmartGameObject spTR33 = new SmartGameObject(new Vector3(30, 15, 0), Vector3.zero, spawnPoint.transform.localScale);
 		
 		Round lvl2 = new Round();
 		lvl2.walls = new List<SmartGameObject>();
@@ -145,12 +150,14 @@ public class GameLevel : MonoBehaviour {
 		lvl2.walls.Add(wallTop2);
 		lvl2.walls.Add(wallTop3);
 		lvl2.walls.Add(wallBot);
+		lvl2.walls.Add(wallCirc);
 		
 		lvl2.spawns = new List<SmartGameObject>();
 		lvl2.spawns.Add(spTL3);
-		lvl2.spawns.Add(spTR3);
 		lvl2.spawns.Add(spBL3);
-		lvl2.spawns.Add(spBR3);
+		lvl2.spawns.Add(spTR3);
+		lvl2.spawns.Add(spTR32);
+		lvl2.spawns.Add(spTR33);
 		
 		// add the round
 		theRounds.Add(lvl2);
@@ -206,7 +213,14 @@ public class GameLevel : MonoBehaviour {
 					w.inst.SetActive(true);
 				}
 				else {
-					w.inst = Instantiate(wall, w.data.transform.position, Quaternion.identity) as GameObject;
+					// hack for wall circle
+					if(curLvl == 2 && i == theRounds[curLvl].walls.Count-1){
+						w.inst = Instantiate(wallCircle, w.data.transform.position, Quaternion.identity) as GameObject;
+					}
+					else {
+						w.inst = Instantiate(wall, w.data.transform.position, Quaternion.identity) as GameObject;
+					}
+
 					w.inst.transform.localScale = w.data.transform.localScale;
 					w.inst.transform.rotation = w.data.transform.rotation;
 				}
@@ -214,6 +228,7 @@ public class GameLevel : MonoBehaviour {
 			
 			for(int i=0; i < theRounds[curLvl].spawns.Count; ++i){
 				SmartGameObject sp = theRounds[curLvl].spawns[i];
+
 				if(lvlReached[curLvl]){
 					sp.inst.SetActive(true);
 				}

@@ -17,13 +17,13 @@ public class Controller : MonoBehaviour {
 	public enum FireMode { SINGLE, SPRAY };	
 	public FireMode fireMode = FireMode.SINGLE;
 
-	void Start () {
+	void Start(){
 		shotTimer = 0.0f;
 		//Targets.objects.Add (this.gameObject);
 		Resources.Load ("Bullet");
 	}
 
-	void FixedUpdate () {
+	void FixedUpdate(){
 		float leftH = Input.GetAxis (movementAxis + "X");
 		float leftV = Input.GetAxis (movementAxis + "Y");
 
@@ -67,13 +67,13 @@ public class Controller : MonoBehaviour {
 
 	}
 
-	void Shoot(Vector2 direction)
-	{
-		if (shotTimer > 0.0f) {
+	void Shoot(Vector2 direction){
+		if(shotTimer > 0.0f){
 			shotTimer -= Time.deltaTime;
 		}
 
-		if (shotTimer <= 0.0f) {
+		if(shotTimer <= 0.0f){
+			GameAudio.that.playShoot();
 			shotTimer = shotDelay;
 
 			Vector3 pos = transform.position;

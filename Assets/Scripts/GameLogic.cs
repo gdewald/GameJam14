@@ -35,18 +35,29 @@ class Wave {
 
 		// Spawn Enemies
 		if (spawnTime <= 0.0f) {
-			GameObject[] spawns = GameObject.FindGameObjectsWithTag("SpawnPoint");
-			foreach(EnemySet enemySet in enemySets){
-				for(int i=0; i< enemySet.number; ++i){
-					int spawnIndex = Random.Range (0, spawns.Length);
-					Vector2 center = spawns[spawnIndex].transform.position;
-					Vector2 offset = Random.insideUnitCircle * 4.0f;
+			GameLogic.gameLogic.StartCoroutine(Spawn ());
+		}
+	}
 
-					GameObject obj = (GameObject) GameObject.Instantiate(Resources.Load (enemySet.enemy), center + offset, Quaternion.identity);
-					obj.GetComponent<Enemy>().SetHitsLeft(enemySet.type);
+	IEnumerator Spawn() {
+		// Incriment enemy count first!!!
+		foreach (EnemySet enemySet in enemySets) {
+			GameLogic.EnemyCount += enemySet.number;
+		}
 
-					++GameLogic.EnemyCount;
-				}
+		GameObject[] spawns = GameObject.FindGameObjectsWithTag("SpawnPoint");
+		foreach(EnemySet enemySet in enemySets){
+			for(int i=0; i< enemySet.number; ++i){
+				int spawnIndex = Random.Range (0, spawns.Length);
+				Vector2 center = spawns[spawnIndex].transform.position;
+				Vector2 offset = Random.insideUnitCircle * 4.0f;
+				
+				GameObject obj = (GameObject) GameObject.Instantiate(Resources.Load (enemySet.enemy), center + offset, Quaternion.identity);
+				obj.GetComponent<Enemy>().SetHitsLeft(enemySet.type);
+				
+				//++GameLogic.EnemyCount;
+
+				yield return new WaitForSeconds(0.08f);
 			}
 		}
 	}
@@ -87,6 +98,7 @@ class Round {
 
 public class GameLogic : MonoBehaviour {
 	static public int EnemyCount = 0;
+	static public GameLogic gameLogic;
 
 	private IList<Round> rounds = new List<Round>();
 
@@ -94,6 +106,7 @@ public class GameLogic : MonoBehaviour {
 	static public int waveNumber = 0;
 
 	public void Start(){
+		gameLogic = this;
 		SetupGame ();
 	}
 

@@ -3,6 +3,7 @@ using System.Collections;
 
 public class BulletCollide : MonoBehaviour {
 	public float speed;
+	GameObject enemyDeath = Resources.Load<GameObject>("EnemyDeath");
 
 	void Update(){
 		Vector2 vel = transform.rigidbody2D.velocity;
@@ -17,22 +18,16 @@ public class BulletCollide : MonoBehaviour {
 		if(obj.tag == "Enemy"){
 			++Game.numKilled;
 
-			print ("dying");
 
-			Animator anim = other.GetComponent<Animator>();
-			anim.SetBool("Dying", true);
-			//Destroy (obj.rigidbody2D);
-			Destroy (obj.collider2D);
-			//Destroy (obj.tag);
-			other.GetComponent<Follow>().enabled = false; 
-
-
-
-			Destroy (obj, 1f);
 			Destroy (gameObject);
 			--GameLogic.EnemyCount;
+
+			GameObject explosion = Instantiate(enemyDeath, obj.transform.position, Quaternion.identity) as GameObject;
+			Destroy (obj);
+			Destroy(explosion, 1f);
 		} 
 		else if(obj.tag == "Wall"){
+			GameAudio.that.playWallHit(other.transform.position);
 			Destroy (gameObject);
 		}
 	}

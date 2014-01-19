@@ -178,6 +178,8 @@ public class GameLevel : MonoBehaviour {
 
 		Player.entity[0].transform.position = Vector3.zero;
 		Player.entity[1].transform.position = Vector3.zero;
+		Player.entity[0].rigidbody2D.velocity = Vector2.zero;
+		Player.entity[1].rigidbody2D.velocity = Vector2.zero;
 
 		// load next level's architecture
 		if(curLvl < theRounds.Count){

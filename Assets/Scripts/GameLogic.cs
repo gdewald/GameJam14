@@ -35,6 +35,17 @@ class SpawnWave {
 
 		// Spawn Enemies
 		if (spawnTime <= 0.0f) {
+			// Print help on the screen!
+			if(GameLogic.roundNumber == 1){
+				if(GameLogic.waveNumber == 0){
+					Camera.main.GetComponent<PrintMessage>().printMessage("Left Stick: Move\n\nRight Stick: Shoot!", 15);
+				}
+				else if(GameLogic.waveNumber == 3){
+					Camera.main.GetComponent<PrintMessage>().printMessage("XBox Bumpers:\nSplit your ship appart!\n\nCut large enemies in half!", 20);
+					//Camera.main.GetComponent<PrintMessage>().printMessage("Split the large orbs apart!");
+				}
+			}
+
 			GameLogic.gameLogic.StartCoroutine(Spawn ());
 			GameAudio.that.playWaveStart();
 		}
@@ -131,6 +142,8 @@ public class GameLogic : MonoBehaviour {
 			}
 
 			GetSpawnRound (spawnRoundNumber);
+
+			Camera.main.GetComponent<PrintMessage>().printMessage("Round " + roundNumber, 3);
 		}
 
 		// Update Round

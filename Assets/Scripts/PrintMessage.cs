@@ -38,7 +38,7 @@ public class PrintMessage : MonoBehaviour {
 		else this.enabled = false;
 	}
 	
-	void printMessage(string message_in, float time = 5.0f) {
+	public void printMessage(string message_in, float time = 5.0f) {
 		if(this.enabled){
 			messageQueue.Enqueue(message_in);
 			messageTimerQueue.Enqueue(time);
@@ -51,7 +51,7 @@ public class PrintMessage : MonoBehaviour {
 	}
 	
 	void OnGUI() {
-		GUI.DrawTexture(new Rect(Screen.width/2 - 120, Screen.height - 80, 240, 80), msg_box.texture);
-		GUI.Label(new Rect(Screen.width/2 - 100, Screen.height - 70, 200, 60), message, style);
+		GUI.DrawTexture(new Rect(Screen.width/2 - 220, Screen.height - 80, 440, 80), msg_box.texture);
+		GUI.Label(new Rect(Screen.width/2 - 200, Screen.height - 70, 400, 60), message, style);
 	}	
 }

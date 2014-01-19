@@ -10,9 +10,14 @@ public class GameAudio : MonoBehaviour {
 	public AudioClip enemyKilled;
 	public AudioClip enemySliced;
 	public AudioClip separate;
+	public AudioClip bgMusic;
 
 	void Awake(){
 		that = this;
+	}
+
+	void Start(){
+		AudioSource.PlayClipAtPoint(bgMusic, Vector3.zero);
 	}
 
 	public void playShoot(){

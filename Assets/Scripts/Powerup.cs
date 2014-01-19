@@ -28,6 +28,7 @@ public class Powerup : MonoBehaviour {
 					o.GetComponent<TrailRenderer>().enabled = true;
 					o.tag = "ChainDestroy";
 				}
+				Player.that.chainType = 1;
 				break;
 			default:
 				break;

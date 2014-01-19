@@ -7,7 +7,7 @@ public class Player : MonoBehaviour {
 
 	public static GameObject[] entity = new GameObject[2];
 	
-	public static int life = 5;
+	public static int life = 3;
 
 	public static bool isCombining = false;
 	public static bool isSplit = false;
@@ -18,6 +18,10 @@ public class Player : MonoBehaviour {
 	float splitSpeed = 0.3f;	// lower is faster
 	float combineSpeed = 0.5f;	// lower is faster
 	int doneMoving = 0;
+
+	void Start(){
+		life = 3;
+	}
 
 	void Awake(){
 		that = this;

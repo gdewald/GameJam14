@@ -36,19 +36,19 @@ public class Powerup : MonoBehaviour {
 		}
 	}
 	
-	void OnCollisionEnter2D(Collision2D col) {
-		if(col.collider.tag == "Powerup") {
-			
-			Debug.Log ("Collided with " + col.collider.name);
-			startPowerup (col.collider.name);
+	void RecvPowerup(GameObject powerup) {
+		if(powerup.tag == "Powerup") {
+			Game.numPowerups--;
+			Debug.Log ("Collided with " + powerup.name);
+			startPowerup (powerup.name);
 			this.enabled = true;
-			Destroy(col.collider.gameObject);
+			Destroy(powerup.gameObject);
 		}
-		else if (col.collider.tag == "Resource") {
-			switch(col.collider.name) {
+		else if (powerup.tag == "Resource") {
+			switch(powerup.name) {
 				case "Health":
 					Player.life++;
-					Destroy(col.collider.gameObject);
+					Destroy(powerup);
 					break;
 				default:
 					break;
@@ -66,7 +66,7 @@ public class Powerup : MonoBehaviour {
 		switch(name) {
 		case "SpeedPowerup":
 			speedInit = GetComponent<Controller>().maxSpeed;
-			GetComponent<Controller>().maxSpeed = speedInit * 2;
+			GetComponent<Controller>().maxSpeed = speedInit * 1.5f;
 			timer = 10.0f;
 			break;
 		case "ChainPowerup":

@@ -33,6 +33,8 @@ public class Player : MonoBehaviour {
 		
 		Vector3 newPos = new Vector3(x/2, y/2, 0);
 
+		GameAudio.that.playCombine ();
+		
 		StartCoroutine(MoveToPosition(
 			Player.entity[0].transform, 
 			newPos,

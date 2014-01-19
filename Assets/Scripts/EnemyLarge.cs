@@ -12,6 +12,7 @@ public class EnemyLarge : Enemy {
 			SetHitsLeft (hitsLeft + 1);
 			GetComponent<Follow>().SetDelay(0.25f);
 			rigidbody2D.velocity = hitDirection.normalized * 20.0f;
+			GameAudio.that.playWallHit(gameObject.transform.position);
 		} else {
 			SetHitsLeft (1);
 			Split (largeEnemy);
@@ -28,7 +29,7 @@ public class EnemyLarge : Enemy {
 		}
 		// Die
 		case 1:
-
+			die ();
 			break;
 		}
 	}

@@ -11,6 +11,7 @@ public abstract class Enemy : MonoBehaviour {
 	public abstract void SetHitsLeft (int hitsLeft);
 
 	public void die(bool countDeath = true){
+		Debug.Log("Die called");
 		if (countDeath) {
 			++Game.numKilled;
 		}

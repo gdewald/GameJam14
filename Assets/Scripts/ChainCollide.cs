@@ -14,8 +14,9 @@ public class ChainCollide : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D other){
 		GameObject obj = other.gameObject;
 		if (obj.tag == "Enemy") {
+			Debug.Log("Chain hit " + obj.name);
 			Enemy enemy = other.GetComponent<Enemy>();
-			enemy.TakeChainHit(rigidbody2D.velocity, 0);
+			enemy.TakeChainHit(rigidbody2D.velocity, Player.that.chainType);
 		}
 	}
 }

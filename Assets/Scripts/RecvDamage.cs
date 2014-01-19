@@ -27,8 +27,15 @@ public class RecvDamage : MonoBehaviour {
 			godTimer = 3;
 			god = true;
 			this.enabled = true;
-			
-			--Player.life;
+
+			if(Player.life > 0) {
+				--Player.life;
+			}
+			else
+			{                   
+				Time.timeScale = 0.0f;
+
+			}
 
 			// Destroy all enemies
 			GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");

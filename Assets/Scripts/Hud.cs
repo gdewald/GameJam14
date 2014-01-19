@@ -19,5 +19,6 @@ public class Hud : MonoBehaviour {
 		GUI.Label(new Rect(Screen.width - 138, 21, 100, 100), "# Killed: " + num, style);
 		GUI.Label(new Rect(Screen.width - 105, 37, 100, 100), "Round:  " + GameLogic.roundNumber, style);
 		GUI.Label(new Rect(Screen.width - 94, 53, 100, 100), "Wave:  " + GameLogic.waveNumber, style);
+		GUI.Label (new Rect (0, 5, 100, 100), "Lives: " + Player.life, style);
 	}
 }

@@ -23,7 +23,7 @@ public class RecvDamage : MonoBehaviour {
 	void OnCollisionEnter2D(Collision2D col) {
 		if(col.collider.tag != "Enemy") return;
 		
-		if(!god) {
+		if(!god && !Player.isCombining) {
 			godTimer = 3;
 			god = true;
 			this.enabled = true;

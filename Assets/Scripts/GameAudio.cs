@@ -7,6 +7,9 @@ public class GameAudio : MonoBehaviour {
 
 	public AudioClip shoot;
 	public AudioClip wallHit;
+	public AudioClip enemyKilled;
+	public AudioClip enemySliced;
+	public AudioClip separate;
 
 	void Awake(){
 		that = this;
@@ -18,5 +21,17 @@ public class GameAudio : MonoBehaviour {
 
 	public void playWallHit(Vector3 pos){
 		AudioSource.PlayClipAtPoint(wallHit, pos);
+	}
+
+	public void playEnemyKilled(Vector3 pos){
+		AudioSource.PlayClipAtPoint(enemyKilled, pos);
+	}
+
+	public void playEnemySliced(Vector3 pos){
+		AudioSource.PlayClipAtPoint(enemySliced, pos);
+	}
+
+	public void playSeparate(){
+		AudioSource.PlayClipAtPoint(shoot, Player.entity [0].transform.position);
 	}
 }

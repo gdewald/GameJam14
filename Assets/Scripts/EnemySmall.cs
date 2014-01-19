@@ -9,6 +9,7 @@ public class EnemySmall : Enemy {
 		// Die
 		if (hitsLeft <= 0) {
 			//gameObject.rigidbody.velocity = hitDirection;
+			GameAudio.that.playEnemyKilled(gameObject.transform.position);
 			die ();
 		}
 	}

@@ -21,6 +21,12 @@ public class BulletCollide : MonoBehaviour {
 
 			Animator anim = other.GetComponent<Animator>();
 			anim.SetBool("Dying", true);
+			//Destroy (obj.rigidbody2D);
+			Destroy (obj.collider2D);
+			//Destroy (obj.tag);
+			other.GetComponent<Follow>().enabled = false; 
+
+
 
 			Destroy (obj, 1f);
 			Destroy (gameObject);

@@ -69,11 +69,15 @@ class Round {
 		// Wave Complete
 		if (wave.IsComplete ()) {
 			waves.RemoveAt(0);
+			++GameLogic.waveNumber;
 		}
 	}
 
 	public bool IsComplete(){
-		return (waves.Count == 0 && GameLogic.EnemyCount == 0);
+		if (waves.Count == 0 && GameLogic.EnemyCount == 0) {
+			return true;
+		}
+		return false;
 	}
 }
 
@@ -81,6 +85,9 @@ public class GameLogic : MonoBehaviour {
 	static public int EnemyCount = 0;
 
 	private IList<Round> rounds = new List<Round>();
+
+	static public int roundNumber = 1;
+	static public int waveNumber = 0;
 
 	public void Start(){
 		SetupGame ();
@@ -100,6 +107,8 @@ public class GameLogic : MonoBehaviour {
 		// Round Complete
 		if (round.IsComplete ()) {
 			rounds.RemoveAt(0);
+			++roundNumber;
+			waveNumber = 0;
 		}
 	}
 

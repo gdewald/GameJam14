@@ -20,7 +20,7 @@ public class BulletCollide : MonoBehaviour {
 			Destroy (gameObject);
 		} 
 		else if(obj.tag == "Wall"){
-			GameAudio.that.playWallHit(other.transform.position);
+			//GameAudio.that.playWallHit(other.transform.position);
 			Destroy (gameObject);
 		}
 	}

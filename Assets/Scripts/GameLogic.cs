@@ -46,19 +46,27 @@ class Wave {
 		}
 
 		GameObject[] spawns = GameObject.FindGameObjectsWithTag("SpawnPoint");
-		foreach(EnemySet enemySet in enemySets){
-			for(int i=0; i< enemySet.number; ++i){
-				int spawnIndex = Random.Range (0, spawns.Length);
-				Vector2 center = spawns[spawnIndex].transform.position;
-				Vector2 offset = Random.insideUnitCircle * 4.0f;
-				
-				GameObject obj = (GameObject) GameObject.Instantiate(Resources.Load (enemySet.enemy), center + offset, Quaternion.identity);
-				obj.GetComponent<Enemy>().SetHitsLeft(enemySet.type);
-				
-				//++GameLogic.EnemyCount;
-
-				yield return new WaitForSeconds(0.08f);
+		while(true){
+			if(enemySets.Count == 0){
+				break;
 			}
+
+			int setIndex = Random.Range(0, enemySets.Count);
+			EnemySet enemySet = enemySets[setIndex]; 
+
+			int spawnIndex = Random.Range (0, spawns.Length);
+			Vector2 center = spawns[spawnIndex].transform.position;
+			Vector2 offset = Random.insideUnitCircle * 4.0f;
+			
+			GameObject obj = (GameObject) GameObject.Instantiate(Resources.Load (enemySet.enemy), center + offset, Quaternion.identity);
+			obj.GetComponent<Enemy>().SetHitsLeft(enemySet.type);
+
+			--enemySet.number;
+			if(enemySet.number == 0){
+				enemySets.RemoveAt(setIndex);
+			}
+
+			yield return new WaitForSeconds(0.08f);
 		}
 	}
 

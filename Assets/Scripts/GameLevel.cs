@@ -12,15 +12,14 @@ public class GameLevel : MonoBehaviour {
 
 		// instantiate walls
 		GameObject wallL = Instantiate(wall, new Vector3(-39, 0, 0), Quaternion.identity) as GameObject;
-
 		GameObject wallR = Instantiate(wall, new Vector3(39, 0, 0), Quaternion.identity) as GameObject;
 
 		GameObject wallT = Instantiate(wall, new Vector3(0, 29, 0), Quaternion.identity) as GameObject;
-		wallT.transform.localScale = new Vector3(2, 90, 0);
+		wallT.transform.localScale = new Vector3(2, 76, 0);
 		wallT.transform.rotation = Quaternion.Euler(0, 0, 90);
 
 		GameObject wallB = Instantiate(wall, new Vector3(0, -29, 0), Quaternion.identity) as GameObject;
-		wallB.transform.localScale = new Vector3(2, 90, 0);
+		wallB.transform.localScale = new Vector3(2, 76, 0);
 		wallB.transform.rotation = Quaternion.Euler(0, 0, 90);
 
 		// instantiate spawn points
@@ -28,7 +27,6 @@ public class GameLevel : MonoBehaviour {
 		GameObject spTR = Instantiate(spawnPoint, new Vector3(35, 25, 0), Quaternion.identity) as GameObject;
 		GameObject spBL = Instantiate(spawnPoint, new Vector3(-35, -25, 0), Quaternion.identity) as GameObject;
 		GameObject spBR = Instantiate(spawnPoint, new Vector3(35, -25, 0), Quaternion.identity) as GameObject;
-
 	}
 
 	void Start () {

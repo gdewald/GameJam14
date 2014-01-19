@@ -133,15 +133,7 @@ public class GameLogic : MonoBehaviour {
 
 		// Round Complete
 		if (round.IsComplete ()) {
-			//TODO: add more rounds
-//			if(roundNumber- 1 <= 1){
-//
-//				DestroyImmediate(roundWalls[roundNumber-1], true);
-//				Instantiate(roundWalls[roundNumber++]);
-//
-//				Player.entity[0].transform.position = Vector3.zero;
-//				Player.entity[1].transform.position = Vector3.zero;
-//			}
+			GameLevel.that.next();
 
 			rounds.RemoveAt(0);
 			++roundNumber;

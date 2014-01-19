@@ -3,13 +3,17 @@ using System.Collections;
 
 public class EnemyLarge : Enemy {
 
-	private GameObject enemy = Resources.Load("Enemy") as GameObject;
-	private GameObject firstEnemy;
-	private GameObject secondEnemy;
+	private GameObject smallEnemy = Resources.Load("Enemy") as GameObject;
+	private GameObject largeEnemy = Resources.Load ("SplitEnemy") as GameObject;
 
 	public override void TakeHit(Vector2 hitDirection){
 		// React to hit
-		print ("hit large");
+		if (hitsLeft < 4) {
+			SetHitsLeft (hitsLeft + 1);
+		} else {
+			SetHitsLeft (1);
+			Split (largeEnemy);
+		}
 	}
 	
 	public override void TakeChainHit(Vector2 chainDirection, int chainType){
@@ -17,26 +21,7 @@ public class EnemyLarge : Enemy {
 		// Split
 		case 0: 
 		{
-			firstEnemy = Instantiate (enemy, gameObject.transform.position, Quaternion.identity) as GameObject;
-			secondEnemy = Instantiate (enemy, gameObject.transform.position, Quaternion.identity) as GameObject;
-
-			firstEnemy.GetComponent<Enemy>().SetHitsLeft(hitsLeft);
-			secondEnemy.GetComponent<Enemy>().SetHitsLeft(hitsLeft);
-
-			Vector3 distanceVec = Player.entity[0].transform.position - Player.entity[1].transform.position;
-			Vector3 directionVec = Vector3.Cross(distanceVec, new Vector3(0, 0, 1));
-
-			firstEnemy.transform.rigidbody2D.velocity = directionVec;
-			secondEnemy.transform.rigidbody2D.velocity = -directionVec;
-
-			firstEnemy.GetComponent<Follow>().SetDelay(0.5f);
-			secondEnemy.GetComponent<Follow>().SetDelay(0.5f);
-
-			++GameLogic.EnemyCount;
-			Destroy (gameObject);
-
-			GameAudio.that.playEnemySliced(gameObject.transform.position);
-
+			Split (smallEnemy);
 			break;
 		}
 		// Die

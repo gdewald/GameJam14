@@ -12,6 +12,8 @@ public class Player : MonoBehaviour {
 	public static bool isSplit = false;
 	public static bool isAnimating = false;
 
+	public int chainType = 0;
+
 	float splitSpeed = 0.3f;	// lower is faster
 	float combineSpeed = 0.5f;	// lower is faster
 	int doneMoving = 0;

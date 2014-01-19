@@ -54,9 +54,10 @@ public class Powerup : MonoBehaviour {
 			timer = 10.0f;
 			break;
 		case "ChainPowerup":
-			foreach(GameObject o in GameObject.FindGameObjectsWithTag("ChainSplit")) {
-				o.tag = "ChainDestroy";
-			}
+			//foreach(GameObject o in GameObject.FindGameObjectsWithTag("ChainSplit")) {
+			//	o.tag = "ChainDestroy";
+			//}
+			Player.that.chainType = 1;
 			timer = 10.0f;
 			break;
 		case "SprayPowerup":
@@ -85,9 +86,10 @@ public class Powerup : MonoBehaviour {
 		case "ChainPowerup":
 			Debug.Log ("Chain powerup ran out");
 			
-			foreach(GameObject o in GameObject.FindGameObjectsWithTag("ChainDestroy")) {
-				o.tag = "ChainSplit";
-			}
+			//foreach(GameObject o in GameObject.FindGameObjectsWithTag("ChainDestroy")) {
+			//	o.tag = "ChainSplit";
+			//}
+			Player.that.chainType = 0;
 			break;
 		case "SprayPowerup":
 			Debug.Log ("Spray powerup ran out");

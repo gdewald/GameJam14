@@ -167,6 +167,8 @@ public class GameLevel : MonoBehaviour {
 			Player.that.combine();
 		}
 
+		Player.entity[0].GetComponent<Controller> ().FreezePlayer (1.0f);
+
 		Player.entity[0].transform.position = Vector3.zero;
 		Player.entity[1].transform.position = Vector3.zero;
 

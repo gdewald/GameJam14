@@ -6,6 +6,10 @@ public class EnemySmall : Enemy {
 	public override void TakeHit(Vector2 hitDirection){
 		SetHitsLeft(hitsLeft-1);
 
+		// PushBack
+		GetComponent<Follow>().SetDelay(0.5f);
+		rigidbody2D.velocity = hitDirection.normalized * 10.0f;
+
 		// Die
 		if (hitsLeft <= 0) {
 			//gameObject.rigidbody.velocity = hitDirection;

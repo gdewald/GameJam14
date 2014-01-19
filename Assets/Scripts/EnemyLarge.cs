@@ -10,6 +10,8 @@ public class EnemyLarge : Enemy {
 		// React to hit
 		if (hitsLeft < 4) {
 			SetHitsLeft (hitsLeft + 1);
+			GetComponent<Follow>().SetDelay(0.25f);
+			rigidbody2D.velocity = hitDirection.normalized * 20.0f;
 		} else {
 			SetHitsLeft (1);
 			Split (largeEnemy);

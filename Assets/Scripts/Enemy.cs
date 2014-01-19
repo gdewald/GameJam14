@@ -17,10 +17,11 @@ public abstract class Enemy : MonoBehaviour {
 		Debug.Log("Die called");
 		if (countDeath) {
 			++Game.numKilled;
-			if(Game.numKilled % 15 == 1) {
+			if(Game.numKilled % 15 == 1 && Game.numPowerups <= 3) {
 				string powerup_name = powerups[Random.Range(0, powerups.Length)];
 				Object powerup = Instantiate (Resources.Load(powerup_name), this.transform.position, this.transform.rotation);
 				powerup.name = powerup_name;
+				Game.numPowerups++;
 			}
 		}
 

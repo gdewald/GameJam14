@@ -5,6 +5,7 @@ public class Game : MonoBehaviour {
 
 	public static GameObject pfPlayerPrimary, pfPlayerSecondary;
 	public static int numKilled = 0;
+	public static int numPowerups = 0;
 
 	void Awake(){
 		pfPlayerPrimary = Resources.Load("PlayerPrimary") as GameObject;

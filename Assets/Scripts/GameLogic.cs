@@ -115,6 +115,7 @@ public class GameLogic : MonoBehaviour {
 	static public int roundNumber = 1;
 	static public int waveNumber = 0;
 
+	static private int spawnRoundNumber = -1;
 
 	public void Start(){
 		gameLogic = this;
@@ -125,7 +126,11 @@ public class GameLogic : MonoBehaviour {
 	public void Update(){
 		// Game Complete
 		if (round == null) {
-			GetSpawnRound (roundNumber-1);
+			if(GameLevel.curLvl == 0){
+				++spawnRoundNumber;
+			}
+
+			GetSpawnRound (spawnRoundNumber);
 		}
 
 		// Update Round
@@ -133,15 +138,7 @@ public class GameLogic : MonoBehaviour {
 
 		// Round Complete
 		if (round.IsComplete ()) {
-			//TODO: add more rounds
-//			if(roundNumber- 1 <= 1){
-//
-//				DestroyImmediate(roundWalls[roundNumber-1], true);
-//				Instantiate(roundWalls[roundNumber++]);
-//
-//				Player.entity[0].transform.position = Vector3.zero;
-//				Player.entity[1].transform.position = Vector3.zero;
-//			}
+			GameLevel.that.next();
 
 			round = null;
 			++roundNumber;
@@ -253,6 +250,56 @@ public class GameLogic : MonoBehaviour {
 			wave.enemySets.Add (new EnemySet("SplitEnemy", 12, 1));
 			round.waves.Add(wave);
 		}
+		else// (roundIndex == 2)
+		{
+			int extra = roundIndex * 5;
 
+			// Wave 1
+			wave = new SpawnWave();
+			wave.spawnTime = 2.0f;
+			wave.enemySets.Add (new EnemySet("Enemy", 20 + extra, 1));
+			wave.enemySets.Add (new EnemySet("Enemy", 5 + extra, 2));
+			wave.enemySets.Add (new EnemySet("SplitEnemy", 3 + extra, 1));
+			round.waves.Add(wave);
+			
+			// Wave 2
+			wave = new SpawnWave();
+			wave.spawnTime = 20.0f;
+			wave.enemySets.Add (new EnemySet("Enemy", 30 + extra, 1));
+			wave.enemySets.Add (new EnemySet("Enemy", 10 + extra, 2));
+			wave.enemySets.Add (new EnemySet("Enemy", 5 + extra, 3));
+			wave.enemySets.Add (new EnemySet("SplitEnemy", 6 + extra, 1));
+			round.waves.Add(wave);
+			
+			// Wave 3
+			wave = new SpawnWave();
+			wave.spawnTime = 30.0f;
+			wave.enemySets.Add (new EnemySet("Enemy", 40 + extra, 1));
+			wave.enemySets.Add (new EnemySet("Enemy", 20 + extra, 2));
+			wave.enemySets.Add (new EnemySet("Enemy", 10 + extra, 3));
+			wave.enemySets.Add (new EnemySet("Enemy", 5 + extra, 4));
+			wave.enemySets.Add (new EnemySet("SplitEnemy", 8 + extra, 1));
+			round.waves.Add(wave);
+			
+			// Wave 4
+			wave = new SpawnWave();
+			wave.spawnTime = 30.0f;
+			wave.enemySets.Add (new EnemySet("Enemy", 50 + extra, 1));
+			wave.enemySets.Add (new EnemySet("Enemy", 30 + extra, 2));
+			wave.enemySets.Add (new EnemySet("Enemy", 20 + extra, 3));
+			wave.enemySets.Add (new EnemySet("Enemy", 15 + extra, 4));
+			wave.enemySets.Add (new EnemySet("SplitEnemy", 10 + extra, 1));
+			round.waves.Add(wave);
+			
+			// Wave 5
+			wave = new SpawnWave();
+			wave.spawnTime = 30.0f;
+			wave.enemySets.Add (new EnemySet("Enemy", 50 + extra, 1));
+			wave.enemySets.Add (new EnemySet("Enemy", 40 + extra, 2));
+			wave.enemySets.Add (new EnemySet("Enemy", 30 + extra, 3));
+			wave.enemySets.Add (new EnemySet("Enemy", 25 + extra, 4));
+			wave.enemySets.Add (new EnemySet("SplitEnemy", 12 + extra, 1));
+			round.waves.Add(wave);
+		}
 	}
 }

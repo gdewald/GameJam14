@@ -7,13 +7,14 @@ public class Follow : MonoBehaviour {
 
 	private float delayTime = 0.0f;
 
-	void Start(){
-
-	}
-
 	void Update () {
 		if (delayTime > 0.0f) {
 			delayTime -= Time.deltaTime;
+
+			// Reset Mass
+			if(delayTime <= 0.0f){
+				gameObject.rigidbody2D.mass = 1.0f;
+			}
 			return;
 		}
 
@@ -46,5 +47,7 @@ public class Follow : MonoBehaviour {
 
 	public void SetDelay(float delay){
 		delayTime = delay;
+
+		gameObject.rigidbody2D.mass = 40.0f;
 	}
 }

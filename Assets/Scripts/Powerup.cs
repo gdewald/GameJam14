@@ -21,6 +21,18 @@ public class Powerup : MonoBehaviour {
 			endPowerup();
 			this.enabled = false;	
 		}
+		else {
+			switch(name) {
+			case "ChainPowerup":
+				foreach(GameObject o in GameObject.FindGameObjectsWithTag("ChainSplit")) {
+					o.GetComponent<TrailRenderer>().enabled = true;
+					o.tag = "ChainDestroy";
+				}
+				break;
+			default:
+				break;
+			}
+		}
 	}
 	
 	void OnCollisionEnter2D(Collision2D col) {
@@ -59,6 +71,7 @@ public class Powerup : MonoBehaviour {
 		case "ChainPowerup":
 			foreach(GameObject o in GameObject.FindGameObjectsWithTag("ChainSplit")) {
 				o.tag = "ChainDestroy";
+				o.GetComponent<TrailRenderer>().enabled = true;
 			}
 			timer = 10.0f;
 			break;
@@ -89,6 +102,7 @@ public class Powerup : MonoBehaviour {
 			Debug.Log ("Chain powerup ran out");
 			
 			foreach(GameObject o in GameObject.FindGameObjectsWithTag("ChainDestroy")) {
+				o.GetComponent<TrailRenderer>().enabled = false;
 				o.tag = "ChainSplit";
 			}
 			break;

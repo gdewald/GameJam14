@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class Title : MonoBehaviour {
@@ -9,6 +9,7 @@ public class Title : MonoBehaviour {
 	public GUIStyle headingStyle = new GUIStyle();
 	public GUIStyle textStyle;
 	public GUIStyle buttonStyle;
+	public GUIStyle subheadingStyle;
 	
 	public enum TitleState { ENTER, SELECT, INSTRUCTIONS };
 	public TitleState titleState = TitleState.ENTER;
@@ -19,8 +20,11 @@ public class Title : MonoBehaviour {
 		headingStyle.fontSize = 36;
 		headingStyle.alignment = TextAnchor.MiddleCenter;
 		headingStyle.wordWrap = true;
+		subheadingStyle = new GUIStyle(headingStyle);
+		subheadingStyle.fontSize = 20;		
 		textStyle = new GUIStyle(headingStyle);
 		textStyle.fontSize = 14;
+		textStyle.alignment = TextAnchor.UpperLeft;
 		buttonStyle = new GUIStyle(headingStyle);
 		buttonStyle.fontSize = 14;
 		
@@ -35,7 +39,7 @@ public class Title : MonoBehaviour {
 			GUI.TextArea(new Rect(Screen.width/2 - 500, Screen.height/4 - 50, 1000, 100), "Divide & Conquer", headingStyle);
 	
 
-			GUI.TextArea(new Rect(Screen.width/2 - 100, Screen.height/2, 200, 100), "Press Start", textStyle);
+			GUI.TextArea(new Rect(Screen.width/2 - 200, Screen.height/2, 400, 100), "Press Start", subheadingStyle);
 			
 			if(Input.GetKeyUp(KeyCode.Return) || Input.GetButtonUp("Start")){
 				titleState = TitleState.SELECT;				
@@ -74,12 +78,24 @@ public class Title : MonoBehaviour {
 			}
 			
 			GUI.TextArea(new Rect(Screen.width/2 - 500, Screen.height/8 - 50, 1000, 100), "Divide & Conquer", headingStyle);
-			GUI.TextArea(new Rect(Screen.width/4 - 150, Screen.height/6 - 25, 300, 100), "Skills", textStyle);
-			GUI.TextArea(new Rect(Screen.width/2 - 150, Screen.height/6 - 25, 300, 100), "Enemies", textStyle);
-			GUI.TextArea(new Rect(3 * Screen.width/4 - 150, Screen.height/6 - 25, 300, 100), "Powerups", textStyle);
+			
+			//Skills
+			GUI.TextArea(new Rect(Screen.width/4 - 150, Screen.height/6, 300, 100), "Skills", subheadingStyle);
+			GUI.TextArea(new Rect(Screen.width/4, Screen.height/6 + 100, 600, 300), "Use B to switch forms\n\nCombined form: gun\n\n\n\nSplit form: powerchain", textStyle);
+			
+			
+			//Enemies
+			GUI.TextArea(new Rect(Screen.width/4 - 150, 4*Screen.height/10, 300, 100), "Enemies", subheadingStyle);
+			
+			GUI.TextArea(new Rect(Screen.width/4, 4*Screen.height/10 + 100, 1000, 100), "Regular enemy: shoot\n\n\n\nLarge enemy: split with powerchain, then shoot", textStyle);
+				
 			
 			
 			
+			//Powerups
+			GUI.TextArea(new Rect(Screen.width/4 - 150, 2*Screen.height/3, 300, 100), "Powerups", subheadingStyle);
+			
+			GUI.TextArea(new Rect(Screen.width/4, 2*Screen.height/3 + 100, 1000, 100), "Speed Powerup\n\n\n\nFirechain Powerup: deadly powerchain\n\n\n\nShield Powerup: force field\n\n\n\nSplitfire powerup: split gunfire\t", textStyle);
 			
 			break;
 		default:

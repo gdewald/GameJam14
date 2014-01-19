@@ -9,6 +9,7 @@ public class Player : MonoBehaviour {
 	
 	public static int life = 5;
 
+	public static bool isCombining = false;
 	public static bool isSplit = false;
 	public static bool isAnimating = false;
 
@@ -25,6 +26,7 @@ public class Player : MonoBehaviour {
 
 	#region Actions
 	public void combine(){
+		Player.isCombining = true;
 		Player.isAnimating = true;
 		doneMoving = 0;
 
@@ -33,6 +35,8 @@ public class Player : MonoBehaviour {
 		
 		Vector3 newPos = new Vector3(x/2, y/2, 0);
 
+		GameAudio.that.playCombine ();
+		
 		StartCoroutine(MoveToPosition(
 			Player.entity[0].transform, 
 			newPos,
@@ -46,6 +50,7 @@ public class Player : MonoBehaviour {
 			combineSpeed,
 			false
 		));
+
 	}
 
 	void combineFinished(){
@@ -59,6 +64,7 @@ public class Player : MonoBehaviour {
 		Player.isAnimating = true;
 		doneMoving = 0;
 
+		entity[0].GetComponent<SpriteRenderer>().sprite = GameObject.Instantiate(Resources.Load<Sprite>("Images/spaceshipBlue")) as Sprite;
 		Player.entity[1].transform.position = Player.entity[0].transform.position;
 		entity[0].GetComponent<Controller>().canShoot = false;
 
@@ -108,7 +114,10 @@ public class Player : MonoBehaviour {
 					}
 					else {
 						combineFinished();
+						Player.isCombining = false;
+						entity[0].GetComponent<SpriteRenderer>().sprite = GameObject.Instantiate(Resources.Load<Sprite>("Images/spaceshipFull")) as Sprite;
 					}
+						
 				}
 			}
 

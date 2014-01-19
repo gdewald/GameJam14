@@ -54,4 +54,40 @@ public abstract class Enemy : MonoBehaviour {
 		
 		GameAudio.that.playEnemySliced(gameObject.transform.position);
 	}
+
+	/*
+	void OnCollisionStay2D(Collision2D coll) {
+		if (coll.gameObject.tag == "Wall") {
+			Follow follow = gameObject.GetComponent<Follow>();
+
+			//if(!follow.IsDelayed())
+			{
+				Vector2 dif = coll.contacts[0].point - new Vector2(gameObject.transform.position.x, gameObject.transform.position.y);
+
+				Vector2 move;
+
+				if(Mathf.Abs(dif.x) > Mathf.Abs(dif.y)){
+					if(gameObject.transform.position.y > coll.gameObject.transform.position.y){
+						move = new Vector2(0.0f, 1.0f);
+					}
+					else{
+						move = new Vector2(0.0f, -1.0f);
+					}
+				}
+				else{
+					if(gameObject.transform.position.x > coll.gameObject.transform.position.x){
+						move = new Vector2(1.0f, 0.0f);
+					}
+					else{
+						move = new Vector2(-1.0f, 0.0f);
+					}
+				}
+
+				gameObject.transform.rigidbody2D.velocity = move.normalized * follow.maxSpeed*4;
+
+				follow.SetDelay(0.1f);
+			}
+		}		
+	}
+	*/
 }

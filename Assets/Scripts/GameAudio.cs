@@ -11,6 +11,8 @@ public class GameAudio : MonoBehaviour {
 	public AudioClip enemySliced;
 	public AudioClip separate;
 	public AudioClip bgMusic;
+	public AudioClip combine;
+	public AudioClip waveStart;
 
 	void Awake(){
 		that = this;
@@ -37,6 +39,14 @@ public class GameAudio : MonoBehaviour {
 	}
 
 	public void playSeparate(){
-		AudioSource.PlayClipAtPoint(shoot, Player.entity [0].transform.position);
+		AudioSource.PlayClipAtPoint(separate, Player.entity [0].transform.position);
+	}
+
+	public void playCombine(){
+		AudioSource.PlayClipAtPoint (combine, Player.entity [0].transform.position);
+	}
+
+	public void playWaveStart(){
+		AudioSource.PlayClipAtPoint (waveStart, Player.entity [0].transform.position);
 	}
 }

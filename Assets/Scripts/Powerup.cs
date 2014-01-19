@@ -39,7 +39,7 @@ public class Powerup : MonoBehaviour {
 	void RecvPowerup(GameObject powerup) {
 		if(powerup.tag == "Powerup") {
 			Game.numPowerups--;
-			Debug.Log ("Collided with " + powerup.name);
+			//Debug.Log ("Collided with " + powerup.name);
 			startPowerup (powerup.name);
 			this.enabled = true;
 			Destroy(powerup.gameObject);
@@ -98,12 +98,12 @@ public class Powerup : MonoBehaviour {
 	void endPowerup() {
 		switch(name) {
 		case "SpeedPowerup":
-			Debug.Log ("Speed powerup ran out");
+			//Debug.Log ("Speed powerup ran out");
 			
 			GetComponent<Controller>().maxSpeed = speedInit;
 			break;
 		case "ChainPowerup":
-			Debug.Log ("Chain powerup ran out");
+			//.Log ("Chain powerup ran out");
 			
 			foreach(GameObject o in GameObject.FindGameObjectsWithTag("ChainDestroy")) {
 				o.GetComponent<TrailRenderer>().enabled = false;
@@ -113,12 +113,12 @@ public class Powerup : MonoBehaviour {
 
 			break;
 		case "SprayPowerup":
-			Debug.Log ("Spray powerup ran out");
+			//Debug.Log ("Spray powerup ran out");
 			
 			Player.entity[0].GetComponent<Controller>().fireMode = Controller.FireMode.SINGLE;
 			break;
 		case "ShieldPowerup":			
-			Debug.Log ("Shield powerup ran out");		
+			//Debug.Log ("Shield powerup ran out");		
 			shield.GetComponent<CircleCollider2D>().enabled = false;
 			shield.GetComponent<SpriteRenderer>().enabled = false;
 			

@@ -12,14 +12,18 @@ public class Controller : MonoBehaviour {
 	public string movementAxis = "LeftStick";
 	public string aimAxis = "RightStick";
 	
+	public float thetaSpread = 15;
+	
+	public enum FireMode { SINGLE, SPRAY };	
+	public FireMode fireMode = FireMode.SINGLE;
 
-	void Start () {
+	void Start(){
 		shotTimer = 0.0f;
 		//Targets.objects.Add (this.gameObject);
 		Resources.Load ("Bullet");
 	}
 
-	void FixedUpdate () {
+	void FixedUpdate(){
 		float leftH = Input.GetAxis (movementAxis + "X");
 		float leftV = Input.GetAxis (movementAxis + "Y");
 
@@ -63,19 +67,33 @@ public class Controller : MonoBehaviour {
 
 	}
 
-	void Shoot(Vector2 direction)
-	{
-		if (shotTimer > 0.0f) {
+	void Shoot(Vector2 direction){
+		if(shotTimer > 0.0f){
 			shotTimer -= Time.deltaTime;
 		}
 
-		if (shotTimer <= 0.0f) {
+		if(shotTimer <= 0.0f){
+			GameAudio.that.playShoot();
 			shotTimer = shotDelay;
 
 			Vector3 pos = transform.position;
 
 			GameObject bullet = (GameObject) Instantiate(Resources.Load("Bullet"), pos, Quaternion.identity) ;
 			bullet.rigidbody2D.velocity = direction;
+			if(fireMode == FireMode.SPRAY) {
+				bullet = (GameObject) Instantiate(Resources.Load("Bullet"), pos, Quaternion.identity) ;
+				float theta = thetaSpread * Mathf.Deg2Rad;
+				Vector3 dir = new Vector3(0,0,0);
+				dir.x = direction.x * Mathf.Cos(theta) - direction.y * Mathf.Sin (theta);
+				dir.y = direction.x * Mathf.Sin(theta) + direction.y * Mathf.Cos(theta);
+				bullet.rigidbody2D.velocity = dir;
+				
+				bullet = (GameObject) Instantiate(Resources.Load("Bullet"), pos, Quaternion.identity) ;
+				theta = -thetaSpread * Mathf.Deg2Rad;
+				dir.x = direction.x * Mathf.Cos(theta) - direction.y * Mathf.Sin (theta);
+				dir.y = direction.x * Mathf.Sin(theta) + direction.y * Mathf.Cos(theta);
+				bullet.rigidbody2D.velocity = dir;
+			}
 		}
 	}
 

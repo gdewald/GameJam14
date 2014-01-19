@@ -40,13 +40,13 @@ public class GameLevel : MonoBehaviour {
 
 		//----- define the levels
 		#region Level 1
-		// instantiate walls
+		// define walls
 		SmartGameObject wallL = new SmartGameObject(new Vector3(-39, 0, 0),	Vector3.zero, wall.transform.localScale);
 		SmartGameObject wallR = new SmartGameObject(new Vector3(39, 0, 0), Vector3.zero, wall.transform.localScale);
 		SmartGameObject wallT = new SmartGameObject(new Vector3(0, 29, 0), new Vector3(0, 0, 90), new Vector3(2, 76, 0));
 		SmartGameObject wallB = new SmartGameObject(new Vector3(0, -29, 0),	new Vector3(0, 0, 90), new Vector3(2, 76, 0));
 
-		// instantiate spawn points
+		// define spawn points
 		SmartGameObject spTL = new SmartGameObject(new Vector3(-35, 25, 0),	Vector3.zero, spawnPoint.transform.localScale);
 		SmartGameObject spTR = new SmartGameObject(new Vector3(35, 25, 0), Vector3.zero, spawnPoint.transform.localScale);
 		SmartGameObject spBL = new SmartGameObject(new Vector3(-35, -25, 0), Vector3.zero, spawnPoint.transform.localScale);
@@ -66,11 +66,11 @@ public class GameLevel : MonoBehaviour {
 		lvl1.spawns.Add(spBR);
 
 		// add the round
-		theRounds.Add(lvl1);
+		//theRounds.Add(lvl1);
 		#endregion Level 1
 
 		#region Level 2
-		// instantiate walls
+		// define walls
 		SmartGameObject wallL2 = new SmartGameObject(new Vector3(-39, 0, 0), Vector3.zero, wall.transform.localScale);
 		SmartGameObject wallR2 = new SmartGameObject(new Vector3(39, 0, 0),	Vector3.zero, wall.transform.localScale);
 		SmartGameObject wallT2 = new SmartGameObject(new Vector3(0, 29, 0), new Vector3(0, 0, 90),	new Vector3(2, 76, 0));
@@ -81,7 +81,7 @@ public class GameLevel : MonoBehaviour {
 		SmartGameObject mouthL = new SmartGameObject(new Vector3(-23.5f, -10.5f, 0), Vector3.zero,new Vector3(3, 5, 0));
 		SmartGameObject mouthR = new SmartGameObject(new Vector3(23.5f, -10.5f, 0), Vector3.zero, new Vector3(3, 5, 0));
 
-		// instantiate spawn points 
+		// define spawn points 
 		SmartGameObject spTL2 = new SmartGameObject(new Vector3(-35, 25, 0), Vector3.zero, spawnPoint.transform.localScale);
 		SmartGameObject spTR2 = new SmartGameObject(new Vector3(35, 25, 0), Vector3.zero, spawnPoint.transform.localScale);
 		SmartGameObject spBL2 = new SmartGameObject(new Vector3(-35, -25, 0), Vector3.zero, spawnPoint.transform.localScale);
@@ -106,8 +106,46 @@ public class GameLevel : MonoBehaviour {
 		lvl2.spawns.Add(spBR2);
 
 		// add the round
-		theRounds.Add(lvl2);
+		//theRounds.Add(lvl2);
 		#endregion Level 2
+
+		#region Level 3
+		// define walls
+		SmartGameObject wallLi1 = new SmartGameObject(new Vector3(-39, 0, 0), Vector3.zero, wall.transform.localScale);
+		SmartGameObject wallRi1 = new SmartGameObject(new Vector3(-13, 15.3f, 0), Vector3.zero, new Vector3(2, 28.62f, 0));
+		SmartGameObject wallRi2 = new SmartGameObject(new Vector3(13, 15.3f, 0), Vector3.zero, new Vector3(2, 28.62f, 0));
+		SmartGameObject wallRi3 = new SmartGameObject(new Vector3(39, 1, 0), Vector3.zero, wall.transform.localScale);
+		SmartGameObject wallTop1 = new SmartGameObject(new Vector3(-25, 29, 0), new Vector3(0, 0, 90), new Vector3(2, 26, 0));
+		SmartGameObject wallTop2 = new SmartGameObject(new Vector3(-0.877f, 1.987f, 0), new Vector3(0, 0, 90), new Vector3(2, 26, 0));
+		SmartGameObject wallTop3 = new SmartGameObject(new Vector3(25, 30, 0), new Vector3(0, 0, 90), new Vector3(2, 26, 0));
+		SmartGameObject wallBot = new SmartGameObject(new Vector3(0, -29, 0), new Vector3(0, 0, 90), new Vector3(2, 80, 0));
+
+		// define spawn points 
+		SmartGameObject spTL3 = new SmartGameObject(new Vector3(-35, 25, 0), Vector3.zero, spawnPoint.transform.localScale);
+		SmartGameObject spTR3 = new SmartGameObject(new Vector3(35, 25, 0), Vector3.zero, spawnPoint.transform.localScale);
+		SmartGameObject spBL3 = new SmartGameObject(new Vector3(-35, -25, 0), Vector3.zero, spawnPoint.transform.localScale);
+		SmartGameObject spBR3 = new SmartGameObject(new Vector3(35, 25, 0), Vector3.zero, spawnPoint.transform.localScale);
+		
+		Round lvl3 = new Round();
+		lvl3.walls = new List<SmartGameObject>();
+		lvl3.walls.Add(wallLi1);
+		lvl3.walls.Add(wallRi1);
+		lvl3.walls.Add(wallRi2);
+		lvl3.walls.Add(wallRi3);
+		lvl3.walls.Add(wallTop1);
+		lvl3.walls.Add(wallTop2);
+		lvl3.walls.Add(wallTop3);
+		lvl3.walls.Add(wallBot);
+		
+		lvl3.spawns = new List<SmartGameObject>();
+		lvl3.spawns.Add(spTL3);
+		lvl3.spawns.Add(spTR3);
+		lvl3.spawns.Add(spBL3);
+		lvl3.spawns.Add(spBR3);
+		
+		// add the round
+		theRounds.Add(lvl3);
+		#endregion Level 3
 	}
 
 	void Start(){

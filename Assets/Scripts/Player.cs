@@ -60,6 +60,8 @@ public class Player : MonoBehaviour {
 		Player.entity[1].transform.position = Player.entity[0].transform.position;
 		entity[0].GetComponent<Controller>().canShoot = false;
 
+		GameAudio.that.playSeparate ();
+
 		StartCoroutine(MoveToPosition(
 			Player.entity[0].transform, 
 			new Vector3(Player.entity[0].transform.position.x - 2, Player.entity[0].transform.position.y),

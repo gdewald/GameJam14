@@ -12,6 +12,10 @@ public class Controller : MonoBehaviour {
 	public string movementAxis = "LeftStick";
 	public string aimAxis = "RightStick";
 	
+	public float thetaSpread = 15;
+	
+	public enum FireMode { SINGLE, SPRAY };	
+	public FireMode fireMode = FireMode.SINGLE;
 
 	void Start(){
 		shotTimer = 0.0f;
@@ -76,6 +80,20 @@ public class Controller : MonoBehaviour {
 
 			GameObject bullet = (GameObject) Instantiate(Resources.Load("Bullet"), pos, Quaternion.identity) ;
 			bullet.rigidbody2D.velocity = direction;
+			if(fireMode == FireMode.SPRAY) {
+				bullet = (GameObject) Instantiate(Resources.Load("Bullet"), pos, Quaternion.identity) ;
+				float theta = thetaSpread * Mathf.Deg2Rad;
+				Vector3 dir = new Vector3(0,0,0);
+				dir.x = direction.x * Mathf.Cos(theta) - direction.y * Mathf.Sin (theta);
+				dir.y = direction.x * Mathf.Sin(theta) + direction.y * Mathf.Cos(theta);
+				bullet.rigidbody2D.velocity = dir;
+				
+				bullet = (GameObject) Instantiate(Resources.Load("Bullet"), pos, Quaternion.identity) ;
+				theta = -thetaSpread * Mathf.Deg2Rad;
+				dir.x = direction.x * Mathf.Cos(theta) - direction.y * Mathf.Sin (theta);
+				dir.y = direction.x * Mathf.Sin(theta) + direction.y * Mathf.Cos(theta);
+				bullet.rigidbody2D.velocity = dir;
+			}
 		}
 	}
 

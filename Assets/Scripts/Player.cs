@@ -6,6 +6,8 @@ public class Player : MonoBehaviour {
 	public static Player that;
 
 	public static GameObject[] entity = new GameObject[2];
+	
+	public static int life = 5;
 
 	public static bool isSplit = false;
 	public static bool isAnimating = false;
@@ -17,7 +19,6 @@ public class Player : MonoBehaviour {
 	void Awake(){
 		that = this;
 	}
-
 
 	#region Actions
 	public void combine(){

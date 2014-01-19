@@ -64,6 +64,7 @@ public class Player : MonoBehaviour {
 		Player.isAnimating = true;
 		doneMoving = 0;
 
+		entity[0].GetComponent<SpriteRenderer>().sprite = GameObject.Instantiate(Resources.Load<Sprite>("Images/spaceshipBlue")) as Sprite;
 		Player.entity[1].transform.position = Player.entity[0].transform.position;
 		entity[0].GetComponent<Controller>().canShoot = false;
 
@@ -114,6 +115,7 @@ public class Player : MonoBehaviour {
 					else {
 						combineFinished();
 						Player.isCombining = false;
+						entity[0].GetComponent<SpriteRenderer>().sprite = GameObject.Instantiate(Resources.Load<Sprite>("Images/spaceshipFull")) as Sprite;
 					}
 						
 				}

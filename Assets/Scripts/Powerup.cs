@@ -69,10 +69,13 @@ public class Powerup : MonoBehaviour {
 			timer = 10.0f;
 			break;
 		case "ChainPowerup":
+
 			foreach(GameObject o in GameObject.FindGameObjectsWithTag("ChainSplit")) {
 				o.tag = "ChainDestroy";
 				o.GetComponent<TrailRenderer>().enabled = true;
 			}
+			Player.that.chainType = 1;
+
 			timer = 10.0f;
 			break;
 		case "SprayPowerup":
@@ -105,6 +108,8 @@ public class Powerup : MonoBehaviour {
 				o.GetComponent<TrailRenderer>().enabled = false;
 				o.tag = "ChainSplit";
 			}
+			Player.that.chainType = 0;
+
 			break;
 		case "SprayPowerup":
 			Debug.Log ("Spray powerup ran out");

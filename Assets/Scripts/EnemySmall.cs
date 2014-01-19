@@ -19,7 +19,9 @@ public class EnemySmall : Enemy {
 	}
 	
 	public override void TakeChainHit(Vector2 chainDirection, int chainType){
-		
+		if (Player.that.chainType == 1) {
+			die ();
+		}
 	}
 	
 	public override void SetHitsLeft (int hitsLeft){

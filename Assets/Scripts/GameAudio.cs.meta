@@ -2,7 +2,12 @@ fileFormatVersion: 2
 guid: 1d25069470726144280e874d930f6f84
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - shoot: {fileID: 8300000, guid: 7a9612b518deb4b4d871758d6c55988c, type: 3}
+  - wallHit: {fileID: 8300000, guid: 2694d041cba202b4692ad9bb099cd068, type: 3}
+  - enemyKilled: {fileID: 8300000, guid: f8eef8833a6e9aa458bbe0ea8c6a2bec, type: 3}
+  - enemySliced: {fileID: 8300000, guid: c93bcefeb4d80354cbc43a09559ae0a5, type: 3}
+  - separate: {fileID: 8300000, guid: b83ffe401a4dd454c8cecab7b5e6340b, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

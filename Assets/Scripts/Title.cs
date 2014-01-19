@@ -17,11 +17,11 @@ public class Title : MonoBehaviour {
 	void Start(){
 		headingStyle.normal.textColor = Color.white;
 		headingStyle.font = font;
-		headingStyle.fontSize = 36;
+		headingStyle.fontSize = 40;
 		headingStyle.alignment = TextAnchor.MiddleCenter;
 		headingStyle.wordWrap = true;
 		subheadingStyle = new GUIStyle(headingStyle);
-		subheadingStyle.fontSize = 20;		
+		subheadingStyle.fontSize = 18;		
 		textStyle = new GUIStyle(headingStyle);
 		textStyle.fontSize = 14;
 		textStyle.alignment = TextAnchor.UpperLeft;
@@ -32,11 +32,13 @@ public class Title : MonoBehaviour {
 	}
 
 	void OnGUI() {
-		GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), Resources.Load ("Images/grid") as Texture, ScaleMode.ScaleAndCrop);
+		GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), Resources.Load ("Images/background") as Texture, ScaleMode.ScaleAndCrop);
 		switch (titleState) {
 			case TitleState.ENTER:
 
 			GUI.TextArea(new Rect(Screen.width/2 - 500, Screen.height/4 - 50, 1000, 100), "Divide & Conquer", headingStyle);
+			GUI.TextArea(new Rect(Screen.width/2 - 500, Screen.height/4 + 25, 1000, 100), "A game by Nicholas Dedenbach,\nGarrett Dewald, Isaiah Hines, and Jon Wiedmann", subheadingStyle);
+			
 	
 
 			GUI.TextArea(new Rect(Screen.width/2 - 200, Screen.height/2, 400, 100), "Press Start", subheadingStyle);

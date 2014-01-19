@@ -13,9 +13,11 @@ public class Hud : MonoBehaviour {
 	}
 	
 	void OnGUI() {
-		GUI.Label(new Rect(Screen.width - 95, 5, 100, 100), GameClock.strTime, style);
-		GUI.Label(new Rect(Screen.width - 127, 21, 100, 100), "# Killed: " + Game.numKilled, style);
-		GUI.Label(new Rect(Screen.width - 95, 37, 100, 100), "Round: " + GameLogic.roundNumber, style);
-		GUI.Label(new Rect(Screen.width - 84, 53, 100, 100), "Wave: " + GameLogic.waveNumber, style);
+		string num = ((Game.numKilled < 10) ? "0" : "") + Game.numKilled;
+
+		GUI.Label(new Rect(Screen.width - 94, 5, 100, 100), GameClock.strTime, style);
+		GUI.Label(new Rect(Screen.width - 138, 21, 100, 100), "# Killed: " + num, style);
+		GUI.Label(new Rect(Screen.width - 105, 37, 100, 100), "Round:  " + GameLogic.roundNumber, style);
+		GUI.Label(new Rect(Screen.width - 94, 53, 100, 100), "Wave:  " + GameLogic.waveNumber, style);
 	}
 }

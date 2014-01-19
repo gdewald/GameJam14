@@ -62,7 +62,9 @@ public class Controller : MonoBehaviour {
 			GameAudio.that.playShoot();
 			shotTimer = shotDelay;
 
-			Vector3 pos = transform.position;
+			direction.Normalize();
+
+			Vector3 pos = transform.position + new Vector3(direction.x * 0.8f, direction.y * 0.8f, 0.0f);
 
 			GameObject bullet = (GameObject) Instantiate(Resources.Load("Bullet"), pos, Quaternion.identity) ;
 			bullet.rigidbody2D.velocity = direction;

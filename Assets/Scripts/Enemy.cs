@@ -8,18 +8,15 @@ public abstract class Enemy : MonoBehaviour {
 	public abstract void TakeChainHit (Vector2 chainDirection, int chainType);
 	public abstract void SetHitsLeft (int hitsLeft);
 
+	private GameObject enemyDeath = Resources.Load<GameObject>("EnemyDeath");
+
 	public void die(){
 		++Game.numKilled;
-		
-		Animator anim = GetComponent<Animator>();
-		anim.SetBool("Dying", true);
-		//Destroy (rigidbody2D);
-		Destroy (collider2D);
-		//Destroy (tag);
-		GetComponent<Follow>().enabled = false; 
-		
-		Destroy (gameObject, 1f);
 		--GameLogic.EnemyCount;
+		
+		GameObject explosion = Instantiate(enemyDeath, gameObject.transform.position, Quaternion.identity) as GameObject;
+		Destroy (gameObject);
+		Destroy(explosion, 1f);
 	}
 
 }

@@ -4,6 +4,8 @@ using System.Collections;
 public class Powerup : MonoBehaviour {
 	float timer;
 	string name;
+	
+	public GameObject shield;
 
 	// Use this for initialization
 	void Start () {
@@ -62,6 +64,12 @@ public class Powerup : MonoBehaviour {
 			timer = 10.0f;
 			break;
 			
+		case "ShieldPowerup":
+			shield.GetComponent<CircleCollider2D>().enabled = true;
+			shield.GetComponent<SpriteRenderer>().enabled = true;
+			timer = 10.0f;
+			break;
+			
 		default:
 			break;
 		}
@@ -85,6 +93,12 @@ public class Powerup : MonoBehaviour {
 			Debug.Log ("Spray powerup ran out");
 			
 			Player.entity[0].GetComponent<Controller>().fireMode = Controller.FireMode.SINGLE;
+			break;
+		case "ShieldPowerup":			
+			Debug.Log ("Shield powerup ran out");		
+			shield.GetComponent<CircleCollider2D>().enabled = false;
+			shield.GetComponent<SpriteRenderer>().enabled = false;
+			
 			break;
 		default:
 			break;

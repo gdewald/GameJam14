@@ -35,6 +35,8 @@ public class EnemyLarge : Enemy {
 			
 			Destroy (gameObject);
 
+			GameAudio.that.playEnemySliced(gameObject.transform.position);
+
 			//firstEnemy.GetComponent<Follow>().enabled = false;
 			//secondEnemy.GetComponent<Follow>().enabled = false;
 

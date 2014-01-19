@@ -76,7 +76,7 @@ public class GameLevel : MonoBehaviour {
 		lvl0.spawns.Add(spBR);
 
 		// add the round
-		//theRounds.Add(lvl0);
+		theRounds.Add(lvl0);
 		#endregion Level 0
 
 		#region Level 1
@@ -118,7 +118,7 @@ public class GameLevel : MonoBehaviour {
 		lvl1.spawns.Add(spMid);
 
 		// add the round
-		//theRounds.Add(lvl1);
+		theRounds.Add(lvl1);
 		#endregion Level 1
 
 		#region Level 2
@@ -214,7 +214,7 @@ public class GameLevel : MonoBehaviour {
 				}
 				else {
 					// hack for wall circle
-					if(true && i == theRounds[curLvl].walls.Count-1){
+					if(curLvl == 2 && i == theRounds[curLvl].walls.Count-1){
 						w.inst = Instantiate(wallCircle, w.data.transform.position, Quaternion.identity) as GameObject;
 					}
 					else {

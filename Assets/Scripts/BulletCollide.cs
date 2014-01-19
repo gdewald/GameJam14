@@ -15,23 +15,10 @@ public class BulletCollide : MonoBehaviour {
 		GameObject obj = other.gameObject;
 
 		if(obj.tag == "Enemy"){
-			++Game.numKilled;
-
-			print ("dying");
-
-			Animator anim = other.GetComponent<Animator>();
-			anim.SetBool("Dying", true);
-			//Destroy (obj.rigidbody2D);
-			Destroy (obj.collider2D);
-			//Destroy (obj.tag);
-			other.GetComponent<Follow>().enabled = false; 
-
-
-
-			Destroy (obj, 1f);
+			Enemy enemy = other.GetComponent<Enemy>();
+			enemy.TakeHit(rigidbody2D.velocity);
 			Destroy (gameObject);
-			--GameLogic.EnemyCount;
-		} 
+		}
 		else if(obj.tag == "Wall"){
 			Destroy (gameObject);
 		}

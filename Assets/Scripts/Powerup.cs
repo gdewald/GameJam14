@@ -4,8 +4,10 @@ using System.Collections;
 public class Powerup : MonoBehaviour {
 	float timer;
 	string name;
-	
+		
 	public GameObject shield;
+	
+	float speedInit;
 
 	// Use this for initialization
 	void Start () {
@@ -50,7 +52,8 @@ public class Powerup : MonoBehaviour {
 		
 		switch(name) {
 		case "SpeedPowerup":
-			GetComponent<Controller>().maxSpeed = 15;
+			speedInit = GetComponent<Controller>().maxSpeed;
+			GetComponent<Controller>().maxSpeed = speedInit * 2;
 			timer = 10.0f;
 			break;
 		case "ChainPowerup":
@@ -80,7 +83,7 @@ public class Powerup : MonoBehaviour {
 		case "SpeedPowerup":
 			Debug.Log ("Speed powerup ran out");
 			
-			GetComponent<Controller>().maxSpeed = 10;
+			GetComponent<Controller>().maxSpeed = speedInit;
 			break;
 		case "ChainPowerup":
 			Debug.Log ("Chain powerup ran out");

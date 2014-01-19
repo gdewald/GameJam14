@@ -14,7 +14,6 @@ public abstract class Enemy : MonoBehaviour {
 	string[] powerups = new string[]{ "ChainPowerup", "ShieldPowerup", "SpeedPowerup", "SprayPowerup"};
 
 	public void die(bool countDeath = true){
-		Debug.Log("Die called");
 		if (countDeath) {
 			++Game.numKilled;
 			if(Game.numKilled % 15 == 1 && Game.numPowerups <= 3) {
@@ -27,6 +26,7 @@ public abstract class Enemy : MonoBehaviour {
 
 		--GameLogic.EnemyCount;
 		
+		GameAudio.that.playEnemyKilled(gameObject.transform.position);
 		GameObject explosion = Instantiate(enemyDeath, gameObject.transform.position, Quaternion.identity) as GameObject;
 		Destroy (gameObject);
 		Destroy(explosion, 1f);

@@ -11,14 +11,17 @@ Platform assembly: C:\git\GameJam14\test_Data\Managed\UnityEngine.dll (this mess
 Loading C:\git\GameJam14\test_Data\Managed\UnityEngine.dll into Unity Child Domain
 Platform assembly: C:\git\GameJam14\test_Data\Managed\Assembly-CSharp.dll (this message is harmless)
 Loading C:\git\GameJam14\test_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
-- Completed reload, in  0.124 seconds
+- Completed reload, in  0.120 seconds
 desktop: 1280x800 60Hz; virtual: 1280x800 at 0,0
 <RI> Initializing input.
 XInput1_3.dll not found.
 <RI> Input initialized.
-UnloadTime: 0.875754 ms
-Unloading 5 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
-
-Unloading 2 unused Assets to reduce memory usage. Loaded Objects now: 159.
-Total: 2.146270 ms (FindLiveObjects: 0.052634 ms CreateObjectMapping: 0.026877 ms MarkObjects: 0.268773 ms  DeleteObjects: 0.016238 ms)
+Platform assembly: C:\git\GameJam14\test_Data\Managed\System.dll (this message is harmless)
+ArgumentException: The thing you want to instantiate is null.
+  at UnityEngine.Object.CheckNullArgument (System.Object arg, System.String message) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Object.Instantiate (UnityEngine.Object original) [0x00000] in <filename unknown>:0 
+  at GameLogic.SetupGame () [0x00000] in <filename unknown>:0 
+  at GameLogic.Start () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
 

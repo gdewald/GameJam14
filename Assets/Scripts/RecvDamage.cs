@@ -28,7 +28,14 @@ public class RecvDamage : MonoBehaviour {
 			god = true;
 			this.enabled = true;
 			
-			Player.life--;
+			--Player.life;
+
+			// Destroy all enemies
+			GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+			foreach(GameObject obj in enemies){
+				Enemy enemy = obj.GetComponent<Enemy>();
+				enemy.die (false); // Don't count deaths
+			}
 		}
 	}
 	

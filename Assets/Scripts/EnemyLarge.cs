@@ -35,6 +35,8 @@ public class EnemyLarge : Enemy {
 			++GameLogic.EnemyCount;
 			Destroy (gameObject);
 
+			GameAudio.that.playEnemySliced(gameObject.transform.position);
+
 			break;
 		}
 		// Die

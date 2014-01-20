@@ -9,11 +9,11 @@ public class CreateChain : MonoBehaviour {
 	public GameObject linkPrefab;
 	public const float min_link_len = .1f;
 	public const float min_link_width = .1f;
-	
-	public string keyName = "Fire2";
-	
+
+	// Can toggle chain at any time
 	public bool canToggle = false;
-	
+	public string toggleKeyName = "Fire2";
+
 	GameObject chain = null;
 
 	void Awake(){
@@ -30,11 +30,12 @@ public class CreateChain : MonoBehaviour {
 	}
 
 	void Update () {
-		if(canToggle && Input.GetButtonDown(keyName))
+		if(canToggle && Input.GetButtonDown(toggleKeyName))
 			ToggleChain();		
 	}
 	
 	void ToggleChain() {
+		Debug.Log("Chain toggled!");
 		if(chain == null) {
 			CreateLinks();
 		}
@@ -72,9 +73,11 @@ public class CreateChain : MonoBehaviour {
 
 			pos_from += v1 * link_len;
 		}
-		
-		HingeJoint2D h = link.AddComponent<HingeJoint2D>();
-		h.connectedBody = to.rigidbody2D;
+
+		if(link != null) {
+			HingeJoint2D h = link.AddComponent<HingeJoint2D>();
+			h.connectedBody = to.rigidbody2D;
+		}
 		//link.AddComponent<Rigidbody2D>();
 		//to.AddComponent<HingeJoint2D>();
 		//to.GetComponent<HingeJoint2D>().connectedBody = link.rigidbody2D;

@@ -4,15 +4,15 @@ using System.Collections.Generic;
 
 public class CreateChain : MonoBehaviour {
 	public GameObject from, to;
-	public float offset = 0.5f;
+	public float offset;
 	
 	public GameObject linkPrefab;
-	public const float min_link_len = .1f;
-	public const float min_link_width = .1f;
+	public const float min_link_len = 0.1f;
+	public const float min_link_width = 0.1f;
 
 	// Can toggle chain at any time
-	public bool canToggle = false;
-	public string toggleKeyName = "Fire2";
+	public bool canToggle;
+	public string toggleKeyName;
 
 	GameObject chain = null;
 
@@ -23,10 +23,10 @@ public class CreateChain : MonoBehaviour {
 	}
 
 	void Start () {
-		//Rigidbody2D body = from.AddComponent<Rigidbody2D>();
-		//body.isKinematic = true;
-		//to.GetComponent<Rigidbody2D>().isKinematic = true;
-	
+		offset = 0.5f;
+
+		canToggle = false;
+		toggleKeyName = "Fire2";
 	}
 
 	void Update () {
@@ -35,11 +35,11 @@ public class CreateChain : MonoBehaviour {
 	}
 	
 	void ToggleChain() {
-		Debug.Log("Chain toggled!");
-		if(chain == null) {
-			CreateLinks();
+		if (chain == null) {
+			CreateLinks ();
+		} else {
+			Destroy (chain);
 		}
-		else Destroy(chain);
 	}
 	
 	void CreateLinks() {

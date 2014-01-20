@@ -5,12 +5,13 @@ public class Player : MonoBehaviour {
 
 	public static Player that;
 
-	public static GameObject[] entity = new GameObject[2];
+	public static GameObject[] entity;
 	
-	public static int life = 3;
+	public static int life;
 
-	public static bool isCombining = false;
+	public static bool canSplit;
 	public static bool isSplit = false;
+	public static bool isCombining = false;
 	public static bool isAnimating = false;
 
 	public int chainType = 0;
@@ -20,7 +21,21 @@ public class Player : MonoBehaviour {
 	int doneMoving = 0;
 
 	void Start(){
+		entity = new GameObject[2];
 		life = 3;
+		
+		isCombining = false;
+		isSplit = false;
+		isAnimating = false;
+		
+		chainType = 0;
+		
+		splitSpeed = 0.3f;	// lower is faster
+		combineSpeed = 0.5f;	// lower is faster
+		doneMoving = 0;
+
+		// Game determines when the player can start splitting
+		canSplit = false;
 	}
 
 	void Awake(){
@@ -29,9 +44,27 @@ public class Player : MonoBehaviour {
 
 
 	#region Actions
+	public void toggleSplit(){
+		if(!Player.isSplit){
+			Player.that.split();
+		} 
+		else {
+			Player.that.combine();
+		}
+	}
+
 	public void combine(){
-		Player.isCombining = true;
-		Player.isAnimating = true;
+		if (!isSplit) {
+			return;
+		}
+
+		if(isAnimating){
+			return;
+		}
+
+		isSplit = false;
+		isCombining = true;
+		isAnimating = true;
 		doneMoving = 0;
 
 		float x = Player.entity[0].transform.position.x + Player.entity[1].transform.position.x;
@@ -58,14 +91,26 @@ public class Player : MonoBehaviour {
 	}
 
 	void combineFinished(){
-		Player.isAnimating = false;
+		isAnimating = false;
+		isCombining = false;
+		entity[0].GetComponent<SpriteRenderer>().sprite = GameObject.Instantiate(Resources.Load<Sprite>("Images/spaceshipFull")) as Sprite;
 		entity[0].GetComponent<CreateChain>().SendMessage("ToggleChain");
-		entity[1].SetActive(false);
 		entity[0].GetComponent<Controller>().canShoot = true;
+		entity[1].SetActive(false);
 	}
 		
 	public void split(){
-		Player.isAnimating = true;
+		if (!canSplit) {
+			return;
+		}
+
+		if(isAnimating){
+			return;
+		}
+
+		isSplit = true;
+		isAnimating = true;
+		entity[1].SetActive(true);
 		doneMoving = 0;
 
 		entity[0].GetComponent<SpriteRenderer>().sprite = GameObject.Instantiate(Resources.Load<Sprite>("Images/spaceshipBlue")) as Sprite;
@@ -91,9 +136,8 @@ public class Player : MonoBehaviour {
 	}
 
 	void splitFinished(){
-		Player.isAnimating = false;
+		isAnimating = false;
 		entity[0].GetComponent<CreateChain>().SendMessage("ToggleChain");
-		
 	}
 	
 	#endregion Actions
@@ -118,8 +162,6 @@ public class Player : MonoBehaviour {
 					}
 					else {
 						combineFinished();
-						Player.isCombining = false;
-						entity[0].GetComponent<SpriteRenderer>().sprite = GameObject.Instantiate(Resources.Load<Sprite>("Images/spaceshipFull")) as Sprite;
 					}
 						
 				}

@@ -5,11 +5,11 @@ using System.Collections.Generic;
 public class GameLevel : MonoBehaviour {
 
 	public static GameLevel that;
-	public static int curLvl = -1;
+	public static int curLvl;
 	public const int NUM_LVLS = 3;
 	bool[] lvlReached;
 	bool firstRun = true;
-
+	
 	class SmartGameObject {
 		public GameObject data;
 		public GameObject inst;
@@ -28,10 +28,15 @@ public class GameLevel : MonoBehaviour {
 		public List<SmartGameObject> walls;
 		public List<SmartGameObject> spawns;
 	}
+	
 	List<Round> theRounds;
 
 	GameObject wall, wallCircle;
 	GameObject spawnPoint;
+	
+	void Start(){
+		curLvl = -1;
+	}
 
 	void Awake(){
 		that = this;
@@ -162,10 +167,6 @@ public class GameLevel : MonoBehaviour {
 		// add the round
 		theRounds.Add(lvl2);
 		#endregion Level 2
-	}
-
-	void Start(){
-		next();
 	}
 
 	public void next(){

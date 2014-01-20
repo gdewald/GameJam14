@@ -27,7 +27,9 @@ public class Hud : MonoBehaviour {
 		GUI.Label (new Rect (Screen.width - 94, 53, 100, 100), "Wave:  " + GameLogic.waveNumber, style);
 		GUI.Label (new Rect (0, 5, 100, 100), "Lives: " + Player.life, style);
 
-		if (Time.timeScale == 0.0f) {
+		if (Player.life <= 0) {
+			Time.timeScale = 0.0f;
+
 			style.fontSize = 33;
 			style.alignment = TextAnchor.MiddleCenter;
 			GUI.Label (new Rect ((Screen.width * 0.5f) - 75, (Screen.height * 0.5f - 50), 150, 100), "GAME OVER", style); 

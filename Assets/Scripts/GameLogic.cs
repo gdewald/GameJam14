@@ -131,6 +131,10 @@ public class GameLogic : MonoBehaviour {
 	public void Start(){
 		gameLogic = this;
 		round = null;
+		roundNumber = 1;
+		waveNumber = 0;
+		spawnRoundNumber = -1;
+
 		//SetupGame ();
 	}
 

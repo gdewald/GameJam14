@@ -170,9 +170,9 @@ public class GameLevel : MonoBehaviour {
 
 	public void next(){
 		// reset player to (0, 0)
-		if(Player.isSplit){
-			Player.that.combine();
-		}
+		//if(Player.isSplit){
+		//	Player.that.combine();
+		//}
 
 		Player.entity[0].GetComponent<Controller> ().FreezePlayer (1.0f);
 

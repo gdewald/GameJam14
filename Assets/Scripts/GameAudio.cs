@@ -25,14 +25,14 @@ public class GameAudio : MonoBehaviour {
 		//Loop the bg music
 		if(!source.isPlaying) {
 			source.clip = bgMusic;
-			source.volume = .3f;
+			source.volume = .2f;
 			source.loop = true;
 			source.Play();
 		}
 	}
 
 	public void playShoot(){
-		AudioSource.PlayClipAtPoint(shoot, Player.entity[0].transform.position);
+		AudioSource.PlayClipAtPoint(shoot, Player.entity[0].transform.position, .8f);
 	}
 
 	public void playWallHit(Vector3 pos){
@@ -56,6 +56,6 @@ public class GameAudio : MonoBehaviour {
 	}
 
 	public void playWaveStart(){
-		AudioSource.PlayClipAtPoint (waveStart, Player.entity [0].transform.position);
+		AudioSource.PlayClipAtPoint (waveStart, Player.entity [0].transform.position, .5f);
 	}
 }

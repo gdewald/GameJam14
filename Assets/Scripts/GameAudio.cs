@@ -19,7 +19,16 @@ public class GameAudio : MonoBehaviour {
 	}
 
 	void Start(){
-		AudioSource.PlayClipAtPoint(bgMusic, Vector3.zero);
+		// Get the audiosource attached to camera
+		AudioSource source  = GetComponent<AudioSource>();
+
+		//Loop the bg music
+		if(!source.isPlaying) {
+			source.clip = bgMusic;
+			source.volume = .3f;
+			source.loop = true;
+			source.Play();
+		}
 	}
 
 	public void playShoot(){

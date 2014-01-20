@@ -86,6 +86,7 @@ public class Controller : MonoBehaviour {
 	}
 
 	void toggleSplit(){
+		Debug.Log("Player split toggled");
 		// don't toggle until split or combine has finished
 		if(Player.isAnimating){
 			return;

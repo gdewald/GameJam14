@@ -19,7 +19,9 @@ class SpawnWave {
 	public float spawnTime = 2.0f;
 	public IList<EnemySet> enemySets = new List<EnemySet>();
 
-	static private float noEnemySpawnTime = 2.0f;
+	private const float noEnemySpawnTime = 2.0f;
+	private bool waveStarted = false;
+	private bool waveComplete = false;
 
 	public void Update(){
 		// If no enemies, Lower Spawn Time
@@ -34,19 +36,27 @@ class SpawnWave {
 		}
 
 		// Spawn Enemies
-		if (spawnTime <= 0.0f) {
+		if (!waveStarted && spawnTime <= 0.0f) {
+			waveStarted = true;
+
 			// Print help on the screen!
 			if(GameLogic.roundNumber == 1){
 				if(GameLogic.waveNumber == 0){
-					Camera.main.GetComponent<PrintMessage>().printMessage("Left Stick: Move\n\nRight Stick: Shoot!", 15);
+					Camera.main.GetComponent<PrintMessage>().printMessage("Left Stick: Move\n\nRight Stick: Shoot", 15.0f);
 				}
 				else if(GameLogic.waveNumber == 3){
-					Camera.main.GetComponent<PrintMessage>().printMessage("XBox Bumpers:\nSplit your ship appart!\n\nCut large enemies in half!", 20);
+					Player.canSplit = true;
+				}
+				else if(GameLogic.waveNumber == 4){
+					Camera.main.GetComponent<PrintMessage>().printMessage("XBox Bumpers:\nSplit your ship appart!\n\nCut large enemies in half", 20.0f);
 					//Camera.main.GetComponent<PrintMessage>().printMessage("Split the large orbs apart!");
 				}
 			}
 
+			// Spawn Waves
 			GameLogic.gameLogic.StartCoroutine(Spawn ());
+
+			// Play Spawn Audio
 			GameAudio.that.playWaveStart();
 		}
 	}
@@ -80,17 +90,25 @@ class SpawnWave {
 
 			yield return new WaitForSeconds(0.08f);
 		}
+
+		waveComplete = true;
 	}
 
 	public bool IsComplete(){
-		return spawnTime <= 0.0f;
+		return waveComplete;
 	}
 }
 
 class SpawnRound {
 	public IList<SpawnWave> waves = new List<SpawnWave> ();
 
+	private float roundEndTimer = 0.0f;
+
 	public void Update(){
+		if (roundEndTimer > 0.0f) {
+			roundEndTimer -= Time.deltaTime;
+		}
+
 		// Round Complete
 		if (waves.Count == 0) {
 			return;
@@ -103,32 +121,49 @@ class SpawnRound {
 
 		// Wave Complete
 		if (wave.IsComplete ()) {
+
 			waves.RemoveAt(0);
+
+			if(waves.Count == 0){
+				roundEndTimer = 5.0f;
+			}
+
 			++GameLogic.waveNumber;
 		}
 	}
 
 	public bool IsComplete(){
-		if (waves.Count == 0 && GameLogic.EnemyCount == 0) {
-			return true;
+		if (waves.Count == 0 && roundEndTimer <= 0.0f) {
+
+			GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+			if(enemies.Length == 0){
+				if(GameLogic.EnemyCount != 0){
+					Debug.LogError("ERROR: Enemy Count should be 0!!!");
+				}
+
+				return true;
+			}
 		}
 		return false;
 	}
 }
 
 public class GameLogic : MonoBehaviour {
-	static public int EnemyCount = 0;
+	static public int EnemyCount;
 	static public GameLogic gameLogic;
-
-	//private IList<Round> rounds = new List<Round>();
-	SpawnRound round;
-
 	static public int roundNumber = 1;
 	static public int waveNumber = 0;
 
 	static private int spawnRoundNumber = -1;
 
+	private SpawnRound round;
+
 	public void Start(){
+		EnemyCount = 0;
+		roundNumber = 1;
+		waveNumber = 0;
+		spawnRoundNumber = -1;
+
 		gameLogic = this;
 		round = null;
 		roundNumber = 1;
@@ -141,6 +176,8 @@ public class GameLogic : MonoBehaviour {
 	public void Update(){
 		// Game Complete
 		if (round == null) {
+		
+			GameLevel.that.next();
 			if(GameLevel.curLvl == 0){
 				++spawnRoundNumber;
 			}
@@ -155,11 +192,11 @@ public class GameLogic : MonoBehaviour {
 
 		// Round Complete
 		if (round.IsComplete ()) {
-			GameLevel.that.next();
-
 			round = null;
 			++roundNumber;
 			waveNumber = 0;
+
+			Camera.main.GetComponent<PrintMessage>().printMessage("Round Complete", 5.0f);
 		}
 	}
 
@@ -191,29 +228,61 @@ public class GameLogic : MonoBehaviour {
 			// Wave 4
 			wave = new SpawnWave();
 			wave.spawnTime = 10.0f;
-			wave.enemySets.Add (new EnemySet("Enemy", 6, 1));
 			wave.enemySets.Add (new EnemySet("SplitEnemy", 2, 1));
 			round.waves.Add(wave);
-			
+
 			// Wave 5
 			wave = new SpawnWave();
-			wave.spawnTime = 30.0f;
-			wave.enemySets.Add (new EnemySet("Enemy", 10, 1));
-			wave.enemySets.Add (new EnemySet("SplitEnemy", 8, 1));
+			wave.spawnTime = 10.0f;
+			wave.enemySets.Add (new EnemySet("SplitEnemy", 2, 1));
 			round.waves.Add(wave);
-			
+
 			// Wave 6
+			wave = new SpawnWave();
+			wave.spawnTime = 30.0f;
+			wave.enemySets.Add (new EnemySet("SplitEnemy", 3, 1));
+			wave.enemySets.Add (new EnemySet("SplitEnemy", 2, 2));
+			wave.enemySets.Add (new EnemySet("SplitEnemy", 3, 3));
+			wave.enemySets.Add (new EnemySet("SplitEnemy", 2, 4));
+			round.waves.Add(wave);
+
+			// Wave 7
+			wave = new SpawnWave();
+			wave.spawnTime = 30.0f;
+			wave.enemySets.Add (new EnemySet("Enemy", 8, 1));
+			wave.enemySets.Add (new EnemySet("Enemy", 5, 2));
+			wave.enemySets.Add (new EnemySet("Enemy", 3, 3));
+			wave.enemySets.Add (new EnemySet("Enemy", 2, 4));
+			wave.enemySets.Add (new EnemySet("SplitEnemy", 2, 1));
+			round.waves.Add(wave);
+
+			// Wave 8
+			wave = new SpawnWave();
+			wave.spawnTime = 30.0f;
+			wave.enemySets.Add (new EnemySet("Enemy", 8, 1));
+			wave.enemySets.Add (new EnemySet("Enemy", 5, 2));
+			wave.enemySets.Add (new EnemySet("Enemy", 3, 3));
+			wave.enemySets.Add (new EnemySet("Enemy", 2, 4));
+			wave.enemySets.Add (new EnemySet("SplitEnemy", 8, 2));
+			round.waves.Add(wave);
+
+			// Wave 9
 			wave = new SpawnWave();
 			wave.spawnTime = 30.0f;
 			wave.enemySets.Add (new EnemySet("Enemy", 20, 1));
 			wave.enemySets.Add (new EnemySet("Enemy", 10, 2));
 			wave.enemySets.Add (new EnemySet("Enemy", 8, 3));
 			wave.enemySets.Add (new EnemySet("Enemy", 5, 4));
+			wave.enemySets.Add (new EnemySet("SplitEnemy", 8, 3));
 			round.waves.Add(wave);
 			
-			// Wave 7
+			// Wave 10
 			wave = new SpawnWave();
-			wave.spawnTime = 2.0f;
+			wave.spawnTime = 30.0f;
+			wave.enemySets.Add (new EnemySet("Enemy", 20, 1));
+			wave.enemySets.Add (new EnemySet("Enemy", 10, 2));
+			wave.enemySets.Add (new EnemySet("Enemy", 8, 3));
+			wave.enemySets.Add (new EnemySet("Enemy", 5, 4));
 			wave.enemySets.Add (new EnemySet("SplitEnemy", 8, 1));
 			wave.enemySets.Add (new EnemySet("SplitEnemy", 6, 2));
 			wave.enemySets.Add (new EnemySet("SplitEnemy", 4, 3));

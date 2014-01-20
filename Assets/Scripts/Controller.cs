@@ -15,11 +15,10 @@ public class Controller : MonoBehaviour {
 	public enum FireMode { SINGLE, SPRAY };	
 	public FireMode fireMode = FireMode.SINGLE;
 	
-	private float shotTimer;
+	private float shotTimer = 0.0f;
 	private float freezeTimer;
 
 	void Start(){
-		shotTimer = 0.0f;
 		//Targets.objects.Add (this.gameObject);
 		Resources.Load ("Bullet");
 	}
@@ -52,9 +51,8 @@ public class Controller : MonoBehaviour {
 
 		// toggle split
 		if(Input.GetButtonDown("ToggleSplit")){
-			toggleSplit();
+			Player.that.toggleSplit();
 		}
-
 	}
 
 	void Shoot(Vector2 direction){
@@ -83,24 +81,6 @@ public class Controller : MonoBehaviour {
 				bullet.rigidbody2D.velocity = dir;
 			}
 		}
-	}
-
-	void toggleSplit(){
-		Debug.Log("Player split toggled");
-		// don't toggle until split or combine has finished
-		if(Player.isAnimating){
-			return;
-		}
-		
-		if(!Player.isSplit){
-			Player.entity[1].SetActive(true);
-			Player.that.split();
-		} 
-		else {
-			Player.that.combine();
-		}
-		
-		Player.isSplit = !Player.isSplit;
 	}
 
 	public void FreezePlayer(float freezeTime){

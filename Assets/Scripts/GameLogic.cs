@@ -112,9 +112,10 @@ class SpawnRound {
 
 			if(!roundOver){
 				GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-				if(enemies.Length == 0){
+				//if(enemies.Length == 0){
+				if(GameLogic.EnemyCount != 0){
 					// Debug potential error
-					if(GameLogic.EnemyCount != 0){
+					if(enemies.Length != 0){
 						Debug.LogError("ERROR: Enemy Count should be 0!!!");
 					}
 

@@ -35,7 +35,12 @@ public class RecvDamage : MonoBehaviour {
 				GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
 				foreach(GameObject obj in enemies){
 					Enemy enemy = obj.GetComponent<Enemy>();
-					enemy.die (false); // Don't count deaths
+					if(enemy == null){
+						Debug.Log("ERROR: Enemy is null!");
+					}
+					else{
+						enemy.die (false); // Don't count deaths
+					}
 				}
 			}
 		}

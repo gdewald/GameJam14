@@ -101,16 +101,33 @@ class SpawnWave {
 
 class SpawnRound {
 	public IList<SpawnWave> waves = new List<SpawnWave> ();
-
+	
+	private bool roundOver = false;
 	private float roundEndTimer = 0.0f;
 
 	public void Update(){
-		if (roundEndTimer > 0.0f) {
-			roundEndTimer -= Time.deltaTime;
-		}
 
 		// Round Complete
 		if (waves.Count == 0) {
+
+			if(!roundOver){
+				GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+				if(enemies.Length == 0){
+					// Debug potential error
+					if(GameLogic.EnemyCount != 0){
+						Debug.LogError("ERROR: Enemy Count should be 0!!!");
+					}
+
+					roundEndTimer = 5.0f;
+					roundOver = true;
+					Camera.main.GetComponent<PrintMessage>().printMessage("Round Complete", 5.0f);
+				}
+			}
+
+			if (roundEndTimer > 0.0f) {
+				roundEndTimer -= Time.deltaTime;
+			}
+
 			return;
 		}
 
@@ -123,28 +140,12 @@ class SpawnRound {
 		if (wave.IsComplete ()) {
 
 			waves.RemoveAt(0);
-
-			if(waves.Count == 0){
-				roundEndTimer = 5.0f;
-			}
-
 			++GameLogic.waveNumber;
 		}
 	}
 
 	public bool IsComplete(){
-		if (waves.Count == 0 && roundEndTimer <= 0.0f) {
-
-			GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-			if(enemies.Length == 0){
-				if(GameLogic.EnemyCount != 0){
-					Debug.LogError("ERROR: Enemy Count should be 0!!!");
-				}
-
-				return true;
-			}
-		}
-		return false;
+		return (roundOver && roundEndTimer <= 0.0f);
 	}
 }
 
@@ -154,7 +155,7 @@ public class GameLogic : MonoBehaviour {
 	static public int roundNumber = 1;
 	static public int waveNumber = 0;
 
-	static private int spawnRoundNumber = -1;
+	static public int spawnRoundNumber = -1;
 
 	private SpawnRound round;
 
@@ -166,9 +167,6 @@ public class GameLogic : MonoBehaviour {
 
 		gameLogic = this;
 		round = null;
-		roundNumber = 1;
-		waveNumber = 0;
-		spawnRoundNumber = -1;
 
 		//SetupGame ();
 	}
@@ -195,8 +193,6 @@ public class GameLogic : MonoBehaviour {
 			round = null;
 			++roundNumber;
 			waveNumber = 0;
-
-			Camera.main.GetComponent<PrintMessage>().printMessage("Round Complete", 5.0f);
 		}
 	}
 
@@ -210,7 +206,7 @@ public class GameLogic : MonoBehaviour {
 			wave.spawnTime = 2.0f;
 			wave.enemySets.Add (new EnemySet("Enemy", 3, 1));
 			round.waves.Add(wave);
-			
+
 			// Wave 2
 			wave = new SpawnWave();
 			wave.spawnTime = 5.0f;
@@ -288,6 +284,7 @@ public class GameLogic : MonoBehaviour {
 			wave.enemySets.Add (new EnemySet("SplitEnemy", 4, 3));
 			wave.enemySets.Add (new EnemySet("SplitEnemy", 2, 4));
 			round.waves.Add(wave);
+
 		} else if (roundIndex == 1) {
 			// Wave 1
 			wave = new SpawnWave();

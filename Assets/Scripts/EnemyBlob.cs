@@ -68,6 +68,8 @@ public class EnemyBlob : Enemy {
 		enemy.touchingEnemies.Clear ();
 
 		// Increase level of object
+		Vector3 offset = (0.5f * other.transform.lossyScale.x) * (other.transform.position - transform.position).normalized;
+		transform.position += offset;
 		Reset (life + enemy.life);
 
 		--GameLogic.EnemyCount;

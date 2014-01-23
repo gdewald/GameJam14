@@ -16,10 +16,15 @@ class EnemySet {
 }
 
 class SpawnWave {
-	public float spawnTime = 2.0f;
-	public IList<EnemySet> enemySets = new List<EnemySet>();
+	public delegate void WaveStartFunction();
 
-	private const float noEnemySpawnTime = 2.0f;
+	public IList<EnemySet> enemySets = new List<EnemySet>();
+	public float spawnTime = 2.0f;
+	public bool waitForEnemies = false;
+	public WaveStartFunction startFunction = null;
+
+
+	private const float noEnemySpawnTime = 3.0f;
 	private bool waveStarted = false;
 	private bool waveComplete = false;
 
@@ -37,19 +42,15 @@ class SpawnWave {
 
 		// Spawn Enemies
 		if (!waveStarted && spawnTime <= 0.0f) {
-			waveStarted = true;
 
-			// Print help on the screen!
-			if(GameLogic.roundNumber == 1){
-				if(GameLogic.waveNumber == 0){
-					Camera.main.GetComponent<PrintMessage>().printMessage("Left Stick: Move\n\nRight Stick: Shoot", 15.0f);
-				}
-				else if(GameLogic.waveNumber == 3){
-					Player.canSplit = true;
-				}
-				else if(GameLogic.waveNumber == 4){
-					Camera.main.GetComponent<PrintMessage>().printMessage("XBox Bumpers:\nSplit your ship appart!\n\nCut large enemies in half", 20.0f);
-				}
+			// Wait for enemies to be gone
+			if(waitForEnemies && GameLogic.EnemyCount != 0){
+				return;
+			}
+
+			waveStarted = true;
+			if(startFunction != null){
+				startFunction();
 			}
 
 			// Spawn Waves
@@ -106,11 +107,10 @@ class SpawnRound {
 
 	public void Update(){
 
-		// Round Complete
 		if (waves.Count == 0){
 			if(!roundOver){
 				//if(enemies.Length == 0){
-				if(GameLogic.EnemyCount != 0){
+				if(GameLogic.EnemyCount == 0){
 					// Debug potential error
 					GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
 					if(enemies.Length != 0){
@@ -175,9 +175,9 @@ public class GameLogic : MonoBehaviour {
 		if (round == null) {
 		
 			GameLevel.that.next();
-			if(GameLevel.curLvl == 0){
-				++spawnRoundNumber;
-			}
+			//if(GameLevel.curLvl == 0){
+			++spawnRoundNumber;
+			//}
 
 			GetSpawnRound (spawnRoundNumber);
 
@@ -195,6 +195,7 @@ public class GameLogic : MonoBehaviour {
 		}
 	}
 
+
 	void GetSpawnRound(int roundIndex){
 		SpawnWave wave;
 		round = new SpawnRound();
@@ -204,6 +205,11 @@ public class GameLogic : MonoBehaviour {
 			wave = new SpawnWave();
 			wave.spawnTime = 2.0f;
 			wave.enemySets.Add (new EnemySet("Enemy", 3, 1));
+			if(spawnRoundNumber == 0){
+				wave.startFunction = () => {
+					Camera.main.GetComponent<PrintMessage>().printMessage("Left Stick: Move\n\nRight Stick: Shoot", 15.0f);
+				};
+			}
 			round.waves.Add(wave);
 
 			// Wave 2
@@ -216,6 +222,7 @@ public class GameLogic : MonoBehaviour {
 			// Wave 3
 			wave = new SpawnWave();
 			wave.spawnTime = 8.0f;
+			wave.enemySets.Add (new EnemySet("Enemy", 12, 2));
 			wave.enemySets.Add (new EnemySet("Enemy", 8, 3));
 			wave.enemySets.Add (new EnemySet("Enemy", 2, 4));
 			round.waves.Add(wave);
@@ -224,24 +231,50 @@ public class GameLogic : MonoBehaviour {
 			wave = new SpawnWave();
 			wave.spawnTime = 10.0f;
 			wave.enemySets.Add (new EnemySet("SplitEnemy", 2, 1));
+			if(spawnRoundNumber == 0){
+				Player.canSplit = true;
+			}
 			round.waves.Add(wave);
 
 			// Wave 5
 			wave = new SpawnWave();
 			wave.spawnTime = 10.0f;
 			wave.enemySets.Add (new EnemySet("SplitEnemy", 2, 1));
+			if(spawnRoundNumber == 0){
+				wave.startFunction = () => {
+					Camera.main.GetComponent<PrintMessage>().printMessage("XBox Bumpers:\nSplit your ship appart!\n\nCut large enemies in half", 20.0f);
+				};
+			}
 			round.waves.Add(wave);
 
 			// Wave 6
 			wave = new SpawnWave();
 			wave.spawnTime = 30.0f;
-			wave.enemySets.Add (new EnemySet("SplitEnemy", 3, 1));
-			wave.enemySets.Add (new EnemySet("SplitEnemy", 2, 2));
-			wave.enemySets.Add (new EnemySet("SplitEnemy", 3, 3));
-			wave.enemySets.Add (new EnemySet("SplitEnemy", 2, 4));
+			wave.enemySets.Add (new EnemySet("EnemyBlob", 1, 100));
+			wave.waitForEnemies = true;
+			wave.startFunction = () => {
+				Camera.main.GetComponent<PrintMessage>().printMessage("Boss Wave", 5.0f);
+			};
 			round.waves.Add(wave);
 
-			// Wave 7
+		} 
+		else if (roundIndex == 1) {
+			// Wave 1
+			wave = new SpawnWave();
+			wave.spawnTime = 5.0f;
+			wave.enemySets.Add (new EnemySet("Enemy", 8, 1));
+			wave.enemySets.Add (new EnemySet("Enemy", 3, 2));
+			round.waves.Add(wave);
+			
+			// Wave 2
+			wave = new SpawnWave();
+			wave.spawnTime = 8.0f;
+			wave.enemySets.Add (new EnemySet("Enemy", 12, 2));
+			wave.enemySets.Add (new EnemySet("Enemy", 8, 3));
+			wave.enemySets.Add (new EnemySet("Enemy", 2, 4));
+			round.waves.Add(wave);
+
+			// Wave 3
 			wave = new SpawnWave();
 			wave.spawnTime = 30.0f;
 			wave.enemySets.Add (new EnemySet("Enemy", 8, 1));
@@ -250,8 +283,8 @@ public class GameLogic : MonoBehaviour {
 			wave.enemySets.Add (new EnemySet("Enemy", 2, 4));
 			wave.enemySets.Add (new EnemySet("SplitEnemy", 2, 1));
 			round.waves.Add(wave);
-
-			// Wave 8
+			
+			// Wave 4
 			wave = new SpawnWave();
 			wave.spawnTime = 30.0f;
 			wave.enemySets.Add (new EnemySet("Enemy", 8, 1));
@@ -261,7 +294,37 @@ public class GameLogic : MonoBehaviour {
 			wave.enemySets.Add (new EnemySet("SplitEnemy", 8, 2));
 			round.waves.Add(wave);
 
-			// Wave 9
+			// Wave 5
+			wave = new SpawnWave();
+			wave.spawnTime = 30.0f;
+			wave.enemySets.Add (new EnemySet("EnemyBlob", 2, 100));
+			wave.waitForEnemies = true;
+			wave.startFunction = () => {
+				Camera.main.GetComponent<PrintMessage>().printMessage("Boss Wave", 5.0f);
+			};
+			round.waves.Add(wave);
+			
+		} 
+		else if (roundIndex == 2) {
+			// Wave 1
+			wave = new SpawnWave();
+			wave.spawnTime = 8.0f;
+			wave.enemySets.Add (new EnemySet("Enemy", 12, 2));
+			wave.enemySets.Add (new EnemySet("Enemy", 8, 3));
+			wave.enemySets.Add (new EnemySet("Enemy", 2, 4));
+			round.waves.Add(wave);
+			
+			// Wave 2
+			wave = new SpawnWave();
+			wave.spawnTime = 30.0f;
+			wave.enemySets.Add (new EnemySet("Enemy", 8, 1));
+			wave.enemySets.Add (new EnemySet("Enemy", 5, 2));
+			wave.enemySets.Add (new EnemySet("Enemy", 3, 3));
+			wave.enemySets.Add (new EnemySet("Enemy", 2, 4));
+			wave.enemySets.Add (new EnemySet("SplitEnemy", 2, 1));
+			round.waves.Add(wave);
+
+			// Wave 3
 			wave = new SpawnWave();
 			wave.spawnTime = 30.0f;
 			wave.enemySets.Add (new EnemySet("Enemy", 20, 1));
@@ -271,8 +334,7 @@ public class GameLogic : MonoBehaviour {
 			wave.enemySets.Add (new EnemySet("SplitEnemy", 8, 3));
 			round.waves.Add(wave);
 			
-			// Wave 10
-			/*
+			// Wave 4
 			wave = new SpawnWave();
 			wave.spawnTime = 30.0f;
 			wave.enemySets.Add (new EnemySet("Enemy", 20, 1));
@@ -284,15 +346,20 @@ public class GameLogic : MonoBehaviour {
 			wave.enemySets.Add (new EnemySet("SplitEnemy", 4, 3));
 			wave.enemySets.Add (new EnemySet("SplitEnemy", 2, 4));
 			round.waves.Add(wave);
-			*/
-
-			// Wave 10
+			
+			// Wave 5
 			wave = new SpawnWave();
 			wave.spawnTime = 30.0f;
-			wave.enemySets.Add (new EnemySet("EnemyBlob", 1, 100));
+			wave.enemySets.Add (new EnemySet("EnemyBlob", 3, 100));
+			wave.waitForEnemies = true;
+			wave.startFunction = () => {
+				Camera.main.GetComponent<PrintMessage>().printMessage("Boss Wave", 5.0f);
+			};
 			round.waves.Add(wave);
-
-		} else if (roundIndex == 1) {
+			
+		} 
+		/*
+		else if (roundIndex == 3) {
 			// Wave 1
 			wave = new SpawnWave();
 			wave.spawnTime = 2.0f;
@@ -329,28 +396,21 @@ public class GameLogic : MonoBehaviour {
 			wave.enemySets.Add (new EnemySet("Enemy", 15, 4));
 			wave.enemySets.Add (new EnemySet("SplitEnemy", 10, 1));
 			round.waves.Add(wave);
-			
-			// Wave 5
-			/*
-			wave = new SpawnWave();
-			wave.spawnTime = 30.0f;
-			wave.enemySets.Add (new EnemySet("Enemy", 50, 1));
-			wave.enemySets.Add (new EnemySet("Enemy", 40, 2));
-			wave.enemySets.Add (new EnemySet("Enemy", 30, 3));
-			wave.enemySets.Add (new EnemySet("Enemy", 25, 4));
-			wave.enemySets.Add (new EnemySet("SplitEnemy", 12, 1));
-			round.waves.Add(wave);
-			*/
 
 			// Wave 5
 			wave = new SpawnWave();
 			wave.spawnTime = 30.0f;
-			wave.enemySets.Add (new EnemySet("EnemyBlob", 2, 100));
+			wave.enemySets.Add (new EnemySet("EnemyBlob", 4, 100));
+			wave.waitForEnemies = true;
+			wave.startFunction = () => {
+				Camera.main.GetComponent<PrintMessage>().printMessage("Boss Wave", 5.0f);
+			};
 			round.waves.Add(wave);
 		}
-		else// (roundIndex == 2)
+		*/
+		else// (roundIndex == 3)
 		{
-			int extra = roundIndex * 5;
+			int extra = (roundIndex-1) * 5;
 
 			// Wave 1
 			wave = new SpawnWave();
@@ -405,6 +465,10 @@ public class GameLogic : MonoBehaviour {
 			wave = new SpawnWave();
 			wave.spawnTime = 30.0f;
 			wave.enemySets.Add (new EnemySet("EnemyBlob", extra, 50));
+			wave.waitForEnemies = true;
+			wave.startFunction = () => {
+				Camera.main.GetComponent<PrintMessage>().printMessage("Boss Wave", 5.0f);
+			};
 			round.waves.Add(wave);
 		}
 	}

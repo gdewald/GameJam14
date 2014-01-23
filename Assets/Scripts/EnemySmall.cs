@@ -3,19 +3,25 @@ using System.Collections;
 
 public class EnemySmall : Enemy {
 	
-	public override void TakeHit(Vector2 hitDirection){
-		SetHitsLeft(hitsLeft-1);
+	public override void Reset (int value){
+		life = value;
+		UpdateTexture ();
+	}
 
-		// PushBack
-		GetComponent<Follow>().SetDelay(0.5f);
-		rigidbody2D.velocity = hitDirection.normalized * 10.0f;
+	public override void TakeHit(Vector2 hitDirection){
+		--life;
 
 		// Die
-		if (hitsLeft <= 0) {
+		if (life <= 0) {
 			die ();
-		} else {
-			GameAudio.that.playWallHit(gameObject.transform.position);
+			return;
 		}
+
+		// Push Enemy Back
+		UpdateTexture ();
+		GetComponent<Follow>().SetDelay(0.5f);
+		rigidbody2D.velocity = hitDirection.normalized * 10.0f;
+		GameAudio.that.playWallHit(gameObject.transform.position);
 	}
 	
 	public override void TakeChainHit(Vector2 chainDirection, int chainType){
@@ -23,14 +29,10 @@ public class EnemySmall : Enemy {
 			die ();
 		}
 	}
-	
-	public override void SetHitsLeft (int hitsLeft){
-		this.hitsLeft = hitsLeft;
-		if(hitsLeft > 0)
-			gameObject.GetComponent<SpriteRenderer>().sprite = GameObject.Instantiate(Resources.Load<Sprite>("Images/Enemy" + (hitsLeft-1).ToString())) as Sprite;
-	}
 
-	void Update(){
-
+	private void UpdateTexture(){
+		if (life > 0 && life <= 4) {
+			gameObject.GetComponent<SpriteRenderer> ().sprite = GameObject.Instantiate (Resources.Load<Sprite> ("Images/Enemy" + (life - 1).ToString ())) as Sprite;
+		}
 	}
 }

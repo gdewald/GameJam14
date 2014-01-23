@@ -4,14 +4,14 @@ using System.Collections.Generic;
 
 class EnemySet {
 	public string enemy;
-	public int number;
-	public int type;
+	public int count;
+	public int value;
 
 	public EnemySet(){}
-	public EnemySet(string enemy, int number, int type){
+	public EnemySet(string enemy, int count, int value){
 		this.enemy = enemy;
-		this.number = number;
-		this.type = type;
+		this.count = count;
+		this.value = value;
 	}
 }
 
@@ -49,7 +49,6 @@ class SpawnWave {
 				}
 				else if(GameLogic.waveNumber == 4){
 					Camera.main.GetComponent<PrintMessage>().printMessage("XBox Bumpers:\nSplit your ship appart!\n\nCut large enemies in half", 20.0f);
-					//Camera.main.GetComponent<PrintMessage>().printMessage("Split the large orbs apart!");
 				}
 			}
 
@@ -64,7 +63,7 @@ class SpawnWave {
 	IEnumerator Spawn() {
 		// Incriment enemy count first!!!
 		foreach (EnemySet enemySet in enemySets) {
-			GameLogic.EnemyCount += enemySet.number;
+			GameLogic.EnemyCount += enemySet.count;
 		}
 
 		GameObject[] spawns = GameObject.FindGameObjectsWithTag("SpawnPoint");
@@ -81,10 +80,10 @@ class SpawnWave {
 			Vector2 offset = Random.insideUnitCircle * (spawns[spawnIndex].transform.localScale.x / 2.0f);
 			
 			GameObject obj = (GameObject) GameObject.Instantiate(Resources.Load (enemySet.enemy), center + offset, Quaternion.identity);
-			obj.GetComponent<Enemy>().SetHitsLeft(enemySet.type);
-
-			--enemySet.number;
-			if(enemySet.number == 0){
+			obj.GetComponent<Enemy>().Reset(enemySet.value);
+	
+			--enemySet.count;
+			if(enemySet.count == 0){
 				enemySets.RemoveAt(setIndex);
 			}
 
@@ -108,13 +107,12 @@ class SpawnRound {
 	public void Update(){
 
 		// Round Complete
-		if (waves.Count == 0) {
-
+		if (waves.Count == 0){
 			if(!roundOver){
-				GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
 				//if(enemies.Length == 0){
 				if(GameLogic.EnemyCount != 0){
 					// Debug potential error
+					GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
 					if(enemies.Length != 0){
 						Debug.LogError("ERROR: Enemy Count should be 0!!!");
 					}
@@ -274,6 +272,7 @@ public class GameLogic : MonoBehaviour {
 			round.waves.Add(wave);
 			
 			// Wave 10
+			/*
 			wave = new SpawnWave();
 			wave.spawnTime = 30.0f;
 			wave.enemySets.Add (new EnemySet("Enemy", 20, 1));
@@ -284,6 +283,13 @@ public class GameLogic : MonoBehaviour {
 			wave.enemySets.Add (new EnemySet("SplitEnemy", 6, 2));
 			wave.enemySets.Add (new EnemySet("SplitEnemy", 4, 3));
 			wave.enemySets.Add (new EnemySet("SplitEnemy", 2, 4));
+			round.waves.Add(wave);
+			*/
+
+			// Wave 10
+			wave = new SpawnWave();
+			wave.spawnTime = 30.0f;
+			wave.enemySets.Add (new EnemySet("EnemyBlob", 1, 100));
 			round.waves.Add(wave);
 
 		} else if (roundIndex == 1) {
@@ -325,6 +331,7 @@ public class GameLogic : MonoBehaviour {
 			round.waves.Add(wave);
 			
 			// Wave 5
+			/*
 			wave = new SpawnWave();
 			wave.spawnTime = 30.0f;
 			wave.enemySets.Add (new EnemySet("Enemy", 50, 1));
@@ -332,6 +339,13 @@ public class GameLogic : MonoBehaviour {
 			wave.enemySets.Add (new EnemySet("Enemy", 30, 3));
 			wave.enemySets.Add (new EnemySet("Enemy", 25, 4));
 			wave.enemySets.Add (new EnemySet("SplitEnemy", 12, 1));
+			round.waves.Add(wave);
+			*/
+
+			// Wave 5
+			wave = new SpawnWave();
+			wave.spawnTime = 30.0f;
+			wave.enemySets.Add (new EnemySet("EnemyBlob", 2, 100));
 			round.waves.Add(wave);
 		}
 		else// (roundIndex == 2)
@@ -376,6 +390,7 @@ public class GameLogic : MonoBehaviour {
 			round.waves.Add(wave);
 			
 			// Wave 5
+			/*
 			wave = new SpawnWave();
 			wave.spawnTime = 30.0f;
 			wave.enemySets.Add (new EnemySet("Enemy", 50 + extra, 1));
@@ -383,6 +398,13 @@ public class GameLogic : MonoBehaviour {
 			wave.enemySets.Add (new EnemySet("Enemy", 30 + extra, 3));
 			wave.enemySets.Add (new EnemySet("Enemy", 25 + extra, 4));
 			wave.enemySets.Add (new EnemySet("SplitEnemy", 12 + extra, 1));
+			round.waves.Add(wave);
+			*/
+
+			// Wave 5
+			wave = new SpawnWave();
+			wave.spawnTime = 30.0f;
+			wave.enemySets.Add (new EnemySet("EnemyBlob", extra, 50));
 			round.waves.Add(wave);
 		}
 	}

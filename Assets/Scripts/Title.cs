@@ -85,7 +85,7 @@ public class Title : MonoBehaviour {
 			
 			//Skills
 			GUI.TextArea(new Rect(Screen.width/4 - 150, Screen.height/6, 300, 100), "Skills", subheadingStyle);
-			GUI.TextArea(new Rect(Screen.width/4, Screen.height/6 + 100, 600, 300), "Use B to switch forms\n\nCombined form: gun\n\n\n\nSplit form: powerchain", textStyle);
+			GUI.TextArea(new Rect(Screen.width/4, Screen.height/6 + 100, 600, 300), "Use LB/RB to switch forms\n\nCombined form: gun\n\n\n\nSplit form: powerchain", textStyle);
 			
 			
 			//Enemies

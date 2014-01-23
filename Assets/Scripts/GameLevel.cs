@@ -62,10 +62,10 @@ public class GameLevel : MonoBehaviour {
 		SmartGameObject wallB = new SmartGameObject(new Vector3(0, -29, 0),	new Vector3(0, 0, 90), new Vector3(2, 76, 0));
 
 		// define spawn points
-		SmartGameObject spTL = new SmartGameObject(new Vector3(-35, 25, 0),	Vector3.zero, spawnPoint.transform.localScale);
-		SmartGameObject spTR = new SmartGameObject(new Vector3(35, 25, 0), Vector3.zero, spawnPoint.transform.localScale);
-		SmartGameObject spBL = new SmartGameObject(new Vector3(-35, -25, 0), Vector3.zero, spawnPoint.transform.localScale);
-		SmartGameObject spBR = new SmartGameObject(new Vector3(35, -25, 0), Vector3.zero, spawnPoint.transform.localScale);
+		SmartGameObject spTL = new SmartGameObject(new Vector3(-30, 20, 0),	Vector3.zero, spawnPoint.transform.localScale);
+		SmartGameObject spTR = new SmartGameObject(new Vector3(30, 20, 0), Vector3.zero, spawnPoint.transform.localScale);
+		SmartGameObject spBL = new SmartGameObject(new Vector3(-30, -20, 0), Vector3.zero, spawnPoint.transform.localScale);
+		SmartGameObject spBR = new SmartGameObject(new Vector3(30, -20, 0), Vector3.zero, spawnPoint.transform.localScale);
 
 		Round lvl0 = new Round();
 		lvl0.walls = new List<SmartGameObject>();
@@ -97,10 +97,10 @@ public class GameLevel : MonoBehaviour {
 		SmartGameObject mouthR = new SmartGameObject(new Vector3(23.5f, -10.5f, 0), Vector3.zero, new Vector3(3, 5, 0));
 
 		// define spawn points 
-		SmartGameObject spTL2 = new SmartGameObject(new Vector3(-35, 25, 0), Vector3.zero, spawnPoint.transform.localScale);
-		SmartGameObject spTR2 = new SmartGameObject(new Vector3(35, 25, 0), Vector3.zero, spawnPoint.transform.localScale);
-		SmartGameObject spBL2 = new SmartGameObject(new Vector3(-35, -25, 0), Vector3.zero, spawnPoint.transform.localScale);
-		SmartGameObject spBR2 = new SmartGameObject(new Vector3(35, -25, 0), Vector3.zero, spawnPoint.transform.localScale);
+		SmartGameObject spTL2 = new SmartGameObject(new Vector3(-30, 20, 0), Vector3.zero, spawnPoint.transform.localScale);
+		SmartGameObject spTR2 = new SmartGameObject(new Vector3(30, 20, 0), Vector3.zero, spawnPoint.transform.localScale);
+		SmartGameObject spBL2 = new SmartGameObject(new Vector3(-30, -20, 0), Vector3.zero, spawnPoint.transform.localScale);
+		SmartGameObject spBR2 = new SmartGameObject(new Vector3(30, -20, 0), Vector3.zero, spawnPoint.transform.localScale);
 		SmartGameObject spMid = new SmartGameObject(new Vector3(0, -5, 0), Vector3.zero, spawnPoint.transform.localScale);
 
 		Round lvl1 = new Round();
@@ -139,9 +139,9 @@ public class GameLevel : MonoBehaviour {
 		SmartGameObject wallCirc = new SmartGameObject(new Vector3(0, -14.5f, 0), Vector3.zero, wallCircle.transform.localScale);
 
 		// define spawn points
-		SmartGameObject spTL3 = new SmartGameObject(new Vector3(-35, 25, 0), Vector3.zero, spawnPoint.transform.localScale);
-		SmartGameObject spBL3 = new SmartGameObject(new Vector3(-35, -25, 0), Vector3.zero, spawnPoint.transform.localScale);
-		SmartGameObject spTR3 = new SmartGameObject(new Vector3(25, 25, 0), Vector3.zero, spawnPoint.transform.localScale);
+		SmartGameObject spTL3 = new SmartGameObject(new Vector3(-30, 20, 0), Vector3.zero, spawnPoint.transform.localScale);
+		SmartGameObject spBL3 = new SmartGameObject(new Vector3(-30, -20, 0), Vector3.zero, spawnPoint.transform.localScale);
+		SmartGameObject spTR3 = new SmartGameObject(new Vector3(25, 20, 0), Vector3.zero, spawnPoint.transform.localScale);
 		SmartGameObject spTR32 = new SmartGameObject(new Vector3(35, 25, 0), Vector3.zero, spawnPoint.transform.localScale);
 		SmartGameObject spTR33 = new SmartGameObject(new Vector3(30, 15, 0), Vector3.zero, spawnPoint.transform.localScale);
 		

@@ -9,6 +9,7 @@ Team Members
 * ndeden@umich.edu Nicholas Dedenbach
 * gdewald@gmail.com Garrett Dewald
 
-
+Play the Game
+-------------
 * Web Build: http://www-personal.umich.edu/~ihines/DivideAndConquer.html
 * Windows:   http://www-personal.umich.edu/~ihines/DivideAndConquer.zip

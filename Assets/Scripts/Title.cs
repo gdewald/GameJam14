@@ -91,7 +91,7 @@ public class Title : MonoBehaviour {
 			GUI.TextArea(new Rect(Screen.width/2 - 500, Screen.height/4 - 50, 1000, 100), "Divide & Conquer", headingStyle);
 			GUI.TextArea(new Rect(Screen.width/2 - 500, Screen.height/4 + 25, 1000, 100), "A game by Nicholas Dedenbach,\nGarrett Dewald, Isaiah Hines, and Jon Wiedmann", subheadingStyle);
 
-			GUI.TextArea(new Rect(Screen.width/2 - 200, Screen.height/2, 400, 100), "Press Start", blinkFadeStyle);
+			GUI.TextArea(new Rect(Screen.width/2 - 200, Screen.height/2, 400, 100), "Press Start (Enter)", blinkFadeStyle);
 			
 			if(Input.GetKeyUp(KeyCode.Return) || Input.GetButtonUp("Start")){
 				titleState = TitleState.SELECT;				
@@ -136,24 +136,24 @@ public class Title : MonoBehaviour {
 			
 			break;
 		case TitleState.INSTRUCTIONS:
-			if(GUI.Button(new Rect(Screen.width/2 - 50, Screen.height - 50, 100, 25), "Back", buttonStyle)){
+			if(GUI.Button(new Rect(8, 13, 70, 25), "Back", buttonStyle)){
 				titleState = TitleState.SELECT;
 				return;
 			}
 			
-			GUI.TextArea(new Rect(Screen.width/2 - 500, Screen.height/8 - 50, 1000, 100), "Divide & Conquer", headingStyle);
+			GUI.TextArea(new Rect(Screen.width/2 - 500, 15, 1000, 100), "Divide & Conquer", headingStyle);
 			
 			//Skills
-			GUI.TextArea(new Rect(Screen.width/4 - 150, Screen.height/6, 300, 100), "Skills", subheadingStyle);
-			GUI.TextArea(new Rect(Screen.width/4, Screen.height/6 + 100, 600, 300), "Use LB/RB to switch forms\n\nCombined form: gun\n\n\n\nSplit form: powerchain", textStyle);
+			GUI.TextArea(new Rect(Screen.width/4 - 150, Screen.height/7, 270, 100), "Skills", subheadingStyle);
+			GUI.TextArea(new Rect(Screen.width/4, Screen.height/7 + 82, 700, 300), "Use LB/RB (SPACEBAR) to switch forms\n\nCombined form: gun\n\n\t\t\tMovement: LEFT STICK (WASD)\n\n\t\t\tShoot: RIGHT STICK (ARROW KEYS)\n\nSplit form: powerchain\n\n\t\t\tMovement: BOTH STICKS (WASD + ARROW KEYS)", textStyle);
 
 			//Enemies
-			GUI.TextArea(new Rect(Screen.width/4 - 150, 4*Screen.height/10, 300, 100), "Enemies", subheadingStyle);
-			GUI.TextArea(new Rect(Screen.width/4, 4*Screen.height/10 + 100, 1000, 100), "Regular enemy: shoot\n\n\n\nLarge enemy: split with powerchain, then shoot", textStyle);
+			GUI.TextArea(new Rect(Screen.width/4 - 150, 4*Screen.height/8, 290, 100), "Enemies", subheadingStyle);
+			GUI.TextArea(new Rect(Screen.width/4, 4*Screen.height/8 + 82, 1000, 100), "Regular enemy: shoot\n\nLarge enemy: split with powerchain, then shoot", textStyle);
 
 			//Powerups
 			GUI.TextArea(new Rect(Screen.width/4 - 150, 2*Screen.height/3, 300, 100), "Powerups", subheadingStyle);
-			GUI.TextArea(new Rect(Screen.width/4, 2*Screen.height/3 + 100, 1000, 100), "Speed Powerup\n\n\n\nFirechain Powerup: deadly powerchain\n\n\n\nShield Powerup: force field\n\n\n\nSplitfire powerup: split gunfire\t", textStyle);
+			GUI.TextArea(new Rect(Screen.width/4, 2*Screen.height/3 + 82, 1000, 100), "Speed Powerup\n\nFirechain Powerup: deadly powerchain\n\nShield Powerup: force field\n\nSplitfire powerup: split gunfire\t", textStyle);
 			
 			break;
 		default:

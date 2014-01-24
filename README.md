@@ -10,5 +10,5 @@ Team Members
 * gdewald@gmail.com Garrett Dewald
 
 
-Web Build: http://www-personal.umich.edu/~ihines/DivideAndConquer.html
-Windows:   http://www-personal.umich.edu/~ihines/DivideAndConquer.zip
+* Web Build: http://www-personal.umich.edu/~ihines/DivideAndConquer.html
+* Windows:   http://www-personal.umich.edu/~ihines/DivideAndConquer.zip

@@ -1,0 +1,27 @@
+Initialize engine version: 4.3.3f1 (c8ca9b6b9936)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 9.0c [igdumd64.dll 8.14.10.2697]
+    Renderer: Mobile Intel(R) 965 Express Chipset Family (Microsoft Corporation - WDDM 1.1)
+    Vendor:   Intel
+    VRAM:     64 MB (via DXGI)
+    Caps:     Shader=30 DepthRT=1 NativeDepth=0 NativeShadow=1 DF16=0 INTZ=0 RAWZ=0 NULL=0 RESZ=0 SlowINTZ=0
+Begin MonoManager ReloadAssembly
+Platform assembly: C:\git\GameJam14\test_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading C:\git\GameJam14\test_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: C:\git\GameJam14\test_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading C:\git\GameJam14\test_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+- Completed reload, in  0.120 seconds
+desktop: 1280x800 60Hz; virtual: 1280x800 at 0,0
+<RI> Initializing input.
+XInput1_3.dll not found.
+<RI> Input initialized.
+Platform assembly: C:\git\GameJam14\test_Data\Managed\System.dll (this message is harmless)
+ArgumentException: The thing you want to instantiate is null.
+  at UnityEngine.Object.CheckNullArgument (System.Object arg, System.String message) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Object.Instantiate (UnityEngine.Object original) [0x00000] in <filename unknown>:0 
+  at GameLogic.SetupGame () [0x00000] in <filename unknown>:0 
+  at GameLogic.Start () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+
